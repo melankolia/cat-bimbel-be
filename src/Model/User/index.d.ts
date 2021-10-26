@@ -1,6 +1,7 @@
 import { PayloadUserVO } from "../../Types";
 
 export interface UserModel {
-    userLogin(PayloadUser: PayloadUserVO): Promise<any>;
+    findByUsername(username: string): Promise<any>;
+    createUser(PayloadUser: PayloadUser): Promise<any>;
 }
 

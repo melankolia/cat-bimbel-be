@@ -5,5 +5,6 @@ const Routers: Router = express.Router();
 const Controller = new UserController();
 
 Routers.post("/login", Controller.userLogin.bind(Controller));
+Routers.post("/register", Controller.createUser.bind(Controller));
 
 export default Routers;
