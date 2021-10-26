@@ -1,5 +1,5 @@
 import express, { Application } from "express";
-// import Router from "./Routes";
+import Router from "./Routes";
 import cors from "cors";
 import logger from "morgan";
 import helmet from "helmet";
@@ -32,9 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(helmet.xssFilter());
 
 // Init Router
-app.use("/", (req: Request, res: Response, next: NextFunction) => {
-    console.log("Running Service")
-});
+app.use("/", Router);
 
 app.listen(process.env.SERVER_PORT || 5000, () =>
     console.log(`Server Running di Port ${process.env.SERVER_PORT || 5000}`)

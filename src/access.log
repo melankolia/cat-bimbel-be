@@ -1,0 +1,7 @@
+::ffff:127.0.0.1 - - [26/Oct/2021:10:50:32 +0000] "GET /users HTTP/1.1" 200 36 "-" "vscode-restclient"
+::ffff:127.0.0.1 - - [26/Oct/2021:11:12:29 +0000] "GET /users HTTP/1.1" 200 36 "-" "vscode-restclient"
+::ffff:127.0.0.1 - - [26/Oct/2021:11:14:46 +0000] "GET /users/login HTTP/1.1" 400 54 "-" "vscode-restclient"
+::ffff:127.0.0.1 - - [26/Oct/2021:11:15:51 +0000] "POST /users/login HTTP/1.1" 500 173 "-" "vscode-restclient"
+::ffff:127.0.0.1 - - [26/Oct/2021:11:16:02 +0000] "POST /users/login HTTP/1.1" 500 173 "-" "vscode-restclient"
+::ffff:127.0.0.1 - - [26/Oct/2021:11:16:07 +0000] "POST /users/login HTTP/1.1" 500 173 "-" "vscode-restclient"
+::ffff:127.0.0.1 - - [26/Oct/2021:11:18:42 +0000] "POST /users/login HTTP/1.1" 200 145 "-" "vscode-restclient"
