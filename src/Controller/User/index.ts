@@ -60,6 +60,32 @@ class User {
         }
 
     }
+
+    public async updateUser(req: Request, res: Response, next: NextFunction): Promise<any> {
+        try {
+            if (!req.body?.secureId ||
+                !req.body?.username ||
+                !req.body?.password ||
+                !req.body?.nama_lengkap
+            ) throw "Bad Request"
+        } catch (error) {
+            return Responses.badRequest(res, error, next);
+        }
+
+        try {
+            const payload: PayloadUserCreateVO = {
+                secureId: req.body?.secureId,
+                username: req.body?.username,
+                password: req.body?.password,
+                nama_lengkap: req.body?.nama_lengkap,
+            }
+            const Result = await this.userService.updateUser(payload);
+            return Responses.success(res, Result);
+        } catch (error) {
+            return Responses.failed(res, error, next);
+        }
+
+    }
 };
 
 export default User;

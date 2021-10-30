@@ -29,6 +29,7 @@ class User implements UserService {
                 secureId: User.secureId,
                 username: User.username,
                 nama_lengkap: User.nama_lengkap,
+                type: User.type,
                 token
             }
             return Response;
@@ -51,9 +52,24 @@ class User implements UserService {
                 secureId: PayloadUser.secureId,
                 username: PayloadUser.username,
                 nama_lengkap: PayloadUser.nama_lengkap,
+                type: "user",
                 token
             }
             return Response;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async updateUser(PayloadUser: PayloadUserCreateVO): Promise<any> {
+        try {
+            const [User] = await this.userModel.findBySecureId(PayloadUser.secureId);
+            if (!User) throw "User is Not Found";
+
+            const Result = await this.userModel.updateUser(PayloadUser);
+            if (!Result) throw "Error Update"
+
+            return true;
         } catch (error) {
             throw error;
         }
