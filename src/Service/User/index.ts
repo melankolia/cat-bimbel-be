@@ -38,7 +38,7 @@ class User implements UserService {
         }
     }
 
-    public async createUser(PayloadUser: PayloadUserCreateVO): Promise<any> {
+    public async registerUser(PayloadUser: PayloadUserCreateVO): Promise<any> {
         try {
             const [User] = await this.userModel.findByUsername(PayloadUser.username);
             if (User) throw "Username is Already Taken";
@@ -54,6 +54,26 @@ class User implements UserService {
                 nama_lengkap: PayloadUser.nama_lengkap,
                 type: PayloadUser.type,
                 token
+            }
+            return Response;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async createUser(PayloadUser: PayloadUserCreateVO): Promise<any> {
+        try {
+            const [User] = await this.userModel.findByUsername(PayloadUser.username);
+            if (User) throw "Username is Already Taken";
+
+            const Result = await this.userModel.createUser(PayloadUser);
+            if (!Result) throw "Error Register"
+
+            const Response = {
+                secureId: PayloadUser.secureId,
+                username: PayloadUser.username,
+                nama_lengkap: PayloadUser.nama_lengkap,
+                type: PayloadUser.type,
             }
             return Response;
         } catch (error) {
@@ -79,7 +99,11 @@ class User implements UserService {
         try {
             const User = await this.userModel.findAll(Payload);
 
-            return User
+            return {
+                elements: 10,
+                pages: 1,
+                data: [...User],
+            }
         } catch (error) {
             throw error;
         }

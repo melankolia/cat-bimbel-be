@@ -1,6 +1,8 @@
-import { PayloadUserVO, PayloadListUserVO } from "../../Types";
+import { PayloadUserVO, PayloadListUserVO, PayloadUserCreateVO } from "../../Types";
 
 export interface UserService {
     userLogin(PayloadUser: PayloadUserVO): Promise<any>
     findAll(Payload: PayloadListUserVO): Promise<any>
+    registerUser(Payload: PayloadUserCreateVO): Promise<any>
+    createUser(Payload: PayloadUserCreateVO): Promise<any>
 }

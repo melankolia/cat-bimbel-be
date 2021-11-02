@@ -55,6 +55,32 @@ class User {
         }
     }
 
+    public async registerUser(req: Request, res: Response, next: NextFunction): Promise<any> {
+        try {
+            if (!req.body?.username ||
+                !req.body?.password ||
+                !req.body?.nama_lengkap
+            ) throw "Bad Request"
+        } catch (error) {
+            return Responses.badRequest(res, error, next);
+        }
+
+        try {
+            const payload: PayloadUserCreateVO = {
+                username: req.body?.username,
+                password: req.body?.password,
+                nama_lengkap: req.body?.nama_lengkap,
+                secureId: uuidv4(),
+                type: 'user'
+            }
+            const Result = await this.userService.registerUser(payload);
+            return Responses.success(res, Result);
+        } catch (error) {
+            return Responses.failed(res, error, next);
+        }
+
+    }
+
     public async createUser(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
             if (!req.body?.username ||
