@@ -9,6 +9,7 @@ Routers.post("/login", Controller.userLogin.bind(Controller));
 Routers.post("/register", Controller.registerUser.bind(Controller));
 Routers.post("/create", AuthCheck.token, Controller.createUser.bind(Controller));
 Routers.post("/update", AuthCheck.token, Controller.updateUser.bind(Controller));
+Routers.delete("/delete", AuthCheck.token, Controller.deleteUser.bind(Controller));
 Routers.get("/list", AuthCheck.token, Controller.findAllUser.bind(Controller));
 
 export default Routers;

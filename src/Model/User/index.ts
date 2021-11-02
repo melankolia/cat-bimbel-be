@@ -76,6 +76,16 @@ class User implements UserModel {
             })
         });
     }
+
+    public deleteUser(payload: Array<PayloadUserCreateVO>): Promise<any> {
+        const sql = `DELETE FROM User where secureId in ?`
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [[payload.map(e => e.secureId)]], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
 };
 
 export default User;

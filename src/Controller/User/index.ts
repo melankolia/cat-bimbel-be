@@ -104,6 +104,24 @@ class User {
         } catch (error) {
             return Responses.failed(res, error, next);
         }
+    }
+
+    public async deleteUser(req: Request, res: Response, next: NextFunction): Promise<any> {
+        try {
+            if (!req.body?.payloadDeleteUserVO
+            ) throw "Bad Request"
+        } catch (error) {
+            return Responses.badRequest(res, error, next);
+        }
+
+        try {
+            const payload = [...req.body?.payloadDeleteUserVO] as Array<PayloadUserCreateVO>;
+
+            const Result = await this.userService.deleteUser(payload);
+            return Responses.success(res, Result);
+        } catch (error) {
+            return Responses.failed(res, error, next);
+        }
 
     }
 

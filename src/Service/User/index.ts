@@ -95,6 +95,15 @@ class User implements UserService {
         }
     }
 
+    public async deleteUser(PayloadUser: Array<PayloadUserCreateVO>): Promise<any> {
+        try {
+            const User = await this.userModel.deleteUser(PayloadUser);
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     public async findAll(Payload: PayloadListUserVO): Promise<any> {
         try {
             const User = await this.userModel.findAll(Payload);

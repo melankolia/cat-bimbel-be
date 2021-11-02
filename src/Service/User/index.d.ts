@@ -5,4 +5,5 @@ export interface UserService {
     findAll(Payload: PayloadListUserVO): Promise<any>
     registerUser(Payload: PayloadUserCreateVO): Promise<any>
     createUser(Payload: PayloadUserCreateVO): Promise<any>
+    deleteUser(Payload: Array<PayloadUserCreateVO>): Promise<any>
 }
