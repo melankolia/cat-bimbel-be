@@ -1,5 +1,5 @@
 import Database from "../../Utils/Configs/db";
-import { PayloadUserCreateVO } from "../../Types";
+import { PayloadListUserVO, PayloadUserCreateVO } from "../../Types";
 import { UserModel } from "./index.d";
 
 class User implements UserModel {
@@ -30,6 +30,22 @@ class User implements UserModel {
 
         return new Promise((resolve, reject) => {
             Database.query(sql, [secureId], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
+    public findAll(payload: PayloadListUserVO): Promise<any> {
+        console.log(payload);
+        const sql = `SELECT secureId,
+                            username,
+                            password,
+                            nama_lengkap
+                            FROM
+                            User where username LIKE ?`
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [payload.search], (err: any, response: any) => {
                 if (!err) resolve(response)
                 else reject(err)
             })

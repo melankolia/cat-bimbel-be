@@ -1,5 +1,5 @@
 import UserModel from "../../Model/User";
-import { PayloadUserVO, PayloadUserCreateVO } from "../../Types";
+import { PayloadUserVO, PayloadUserCreateVO, PayloadListUserVO } from "../../Types";
 import { UserService } from "./index.d";
 import path from "path";
 import dotenv from "dotenv";
@@ -52,7 +52,7 @@ class User implements UserService {
                 secureId: PayloadUser.secureId,
                 username: PayloadUser.username,
                 nama_lengkap: PayloadUser.nama_lengkap,
-                type: "user",
+                type: PayloadUser.type,
                 token
             }
             return Response;
@@ -70,6 +70,16 @@ class User implements UserService {
             if (!Result) throw "Error Update"
 
             return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async findAll(Payload: PayloadListUserVO): Promise<any> {
+        try {
+            const User = await this.userModel.findAll(Payload);
+
+            return User
         } catch (error) {
             throw error;
         }
