@@ -27,6 +27,15 @@ export interface PayloadCreateKecerdasanVO {
     is_active: boolean;
 }
 
+export interface PayloadCreateKepribadianVO {
+    secureId: string;
+    title: string;
+    description: string;
+    time: number;
+    is_active: boolean;
+    type: string;
+}
+
 export interface PayloadActivationVO {
     secureId: string;
     is_active: boolean;

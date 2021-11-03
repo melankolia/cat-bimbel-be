@@ -1,4 +1,4 @@
-import { PayloadCreateKecerdasanVO } from "../../../Types"
+import { PayloadCreateKecerdasanVO, PayloadActivationVO } from "../../../Types"
 
 export interface KecerdasanService {
     createData(payload: PayloadCreateKecerdasanVO): Promise<any>
