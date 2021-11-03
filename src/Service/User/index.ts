@@ -67,15 +67,9 @@ class User implements UserService {
             if (User) throw "Username is Already Taken";
 
             const Result = await this.userModel.createUser(PayloadUser);
-            if (!Result) throw "Error Register"
+            if (!Result) throw "Error Create User"
 
-            const Response = {
-                secureId: PayloadUser.secureId,
-                username: PayloadUser.username,
-                nama_lengkap: PayloadUser.nama_lengkap,
-                type: PayloadUser.type,
-            }
-            return Response;
+            return true;
         } catch (error) {
             throw error;
         }

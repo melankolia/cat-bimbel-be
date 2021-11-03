@@ -81,7 +81,7 @@ class User {
 
     }
 
-    public async createUser(req: Request, res: Response, next: NextFunction): Promise<any> {
+    public async insertUser(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
             if (!req.body?.username ||
                 !req.body?.password ||
@@ -92,19 +92,29 @@ class User {
         }
 
         try {
+            let Result: any;
             const payload: PayloadUserCreateVO = {
                 username: req.body?.username,
                 password: req.body?.password,
                 nama_lengkap: req.body?.nama_lengkap,
-                secureId: uuidv4(),
+                secureId: "",
                 type: 'user'
             }
-            const Result = await this.userService.createUser(payload);
+
+            if (!req.body?.secureId) {
+                payload.secureId = uuidv4();
+                Result = await this.userService.createUser(payload);
+            } else {
+                payload.secureId = req.body?.secureId;
+                Result = await this.userService.updateUser(payload);
+            }
+
             return Responses.success(res, Result);
         } catch (error) {
             return Responses.failed(res, error, next);
         }
     }
+
 
     public async deleteUser(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
@@ -125,32 +135,6 @@ class User {
 
     }
 
-    public async updateUser(req: Request, res: Response, next: NextFunction): Promise<any> {
-        try {
-            if (!req.body?.secureId ||
-                !req.body?.username ||
-                !req.body?.password ||
-                !req.body?.nama_lengkap
-            ) throw "Bad Request"
-        } catch (error) {
-            return Responses.badRequest(res, error, next);
-        }
-
-        try {
-            const payload: PayloadUserCreateVO = {
-                secureId: req.body?.secureId,
-                username: req.body?.username,
-                password: req.body?.password,
-                nama_lengkap: req.body?.nama_lengkap,
-                type: "user"
-            }
-            const Result = await this.userService.updateUser(payload);
-            return Responses.success(res, Result);
-        } catch (error) {
-            return Responses.failed(res, error, next);
-        }
-
-    }
 };
 
 export default User;
