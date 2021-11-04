@@ -67,7 +67,17 @@ class Kecerdasan implements KecerdasanService {
             }
         } catch (error) {
             throw error;
+        }
+    }
 
+    public async deleteQuestion(secureId: string): Promise<any> {
+        try {
+            const Question = await this.kecerdasanModel.deleteQuestion(secureId);
+            if (!Question) throw "Delete Data Error";
+
+            return true;
+        } catch (error) {
+            throw error;
         }
     }
 

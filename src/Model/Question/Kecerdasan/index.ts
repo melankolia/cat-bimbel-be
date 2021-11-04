@@ -26,6 +26,17 @@ class Kecerdasan implements KecerdasanModel {
         });
     };
 
+    public deleteQuestion(secureId: string): Promise<any> {
+        const sql = `delete from kecerdasan_question where secureId = ?`;
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [secureId], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
 };
 
 export default Kecerdasan;

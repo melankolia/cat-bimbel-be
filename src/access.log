@@ -248,3 +248,7 @@
 ::1 - - [04/Nov/2021:15:02:20 +0000] "GET /questions/kecerdasan?secureId=50d7e340-e15c-4ad9-9e6e-a138e5cb76a3 HTTP/1.1" 200 1135 "-" "PostmanRuntime/7.28.4"
 ::1 - - [04/Nov/2021:15:02:40 +0000] "GET /questions/kecerdasan?secureId=50d7e340-e15c-4ad9-9e6e-a138e5cb76a3 HTTP/1.1" 200 1135 "-" "PostmanRuntime/7.28.4"
 ::1 - - [04/Nov/2021:15:03:00 +0000] "GET /questions/kecerdasan?secureId=50d7e340-e15c-4ad9-9e6e-a138e5cb76a3 HTTP/1.1" 200 1135 "-" "PostmanRuntime/7.28.4"
+::1 - - [04/Nov/2021:15:06:27 +0000] "GET /questions/kecerdasan?secureId=50d7e340-e15c-4ad9-9e6e-a138e5cb76a3 HTTP/1.1" 200 1135 "-" "PostmanRuntime/7.28.4"
+::1 - - [04/Nov/2021:15:38:15 +0000] "DELETE /questions/kecerdasan HTTP/1.1" 400 63 "-" "PostmanRuntime/7.28.4"
+::1 - - [04/Nov/2021:15:38:20 +0000] "DELETE /questions/kecerdasan?secureId=a9e9e79b-5d29-42fc-ae35-6139619ff2c6 HTTP/1.1" 200 30 "-" "PostmanRuntime/7.28.4"
+::1 - - [04/Nov/2021:15:38:23 +0000] "GET /questions/kecerdasan?secureId=50d7e340-e15c-4ad9-9e6e-a138e5cb76a3 HTTP/1.1" 200 954 "-" "PostmanRuntime/7.28.4"
