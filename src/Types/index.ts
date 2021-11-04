@@ -36,6 +36,22 @@ export interface PayloadCreateKepribadianVO {
     type: string;
 }
 
+export interface PayloadCreateKejiwaanVO {
+    secureId: string;
+    title: string;
+    description: string;
+    time: number;
+    is_active: boolean;
+}
+
+export interface PayloadCreateKecermatanVO {
+    secureId: string;
+    title: string;
+    description: string;
+    time: number;
+    is_active: boolean;
+}
+
 export interface PayloadActivationVO {
     secureId: string;
     is_active: boolean;
