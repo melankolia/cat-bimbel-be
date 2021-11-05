@@ -37,11 +37,11 @@ class User implements UserModel {
     }
 
     public findAll(payload: PayloadListUserVO): Promise<any> {
-        console.log(payload);
         const sql = `SELECT secureId,
                             username,
                             password,
-                            nama_lengkap
+                            nama_lengkap,
+                            is_online
                             FROM
                             User where username LIKE ?`
         return new Promise((resolve, reject) => {

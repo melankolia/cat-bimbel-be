@@ -88,6 +88,42 @@ export interface PayloadCreateKepribadianQuestionVO {
     question: string;
 }
 
+// Init: boolean;
+export interface PayloadCreateKejiwaanVO {
+    secureId: string;
+    title: string;
+    description: string;
+    time: number;
+    is_active: boolean;
+}
+
+export interface PayloadRequestKejiwaanQuestionVO {
+    groupSecureId: string;
+    secureId: string;
+    question: string;
+    answerList: Array<{
+        secureId: string;
+        answer: string;
+        value: number;
+        symbol: string;
+    }>
+}
+
+export interface PayloadCreateKejiwaanAnswerVO {
+    id_question: number;
+    secureId: string;
+    answer: string;
+    value: number;
+    symbol: string;
+}
+
+export interface PayloadCreateKejiwaanQuestionVO {
+    id_group: string | null;
+    secureId: string;
+    question: string;
+}
+// End
+
 export interface PayloadCreateKepribadianVO {
     secureId: string;
     title: string;
