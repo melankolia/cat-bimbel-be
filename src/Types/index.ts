@@ -53,6 +53,41 @@ export interface PayloadCreateKecerdasanQuestionVO {
     question: string;
 }
 
+// Init: string;
+export interface PayloadCreateKepribadianVO {
+    secureId: string;
+    title: string;
+    description: string;
+    time: number;
+    is_active: boolean;
+}
+
+export interface PayloadRequestKepribadianQuestionVO {
+    groupSecureId: string;
+    secureId: string;
+    question: string;
+    answerList: Array<{
+        secureId: string;
+        answer: string;
+        value: number;
+        symbol: string;
+    }>
+}
+
+export interface PayloadCreateKepribadianAnswerVO {
+    id_question: number;
+    secureId: string;
+    answer: string;
+    value: number;
+    symbol: string;
+}
+
+export interface PayloadCreateKepribadianQuestionVO {
+    id_group: string | null;
+    secureId: string;
+    question: string;
+}
+
 export interface PayloadCreateKepribadianVO {
     secureId: string;
     title: string;

@@ -10,7 +10,6 @@ const Kepribadian = new KepribadianController();
 const Kejiwaan = new KejiwaanController();
 const Kecermatan = new KecermatanController();
 
-
 Routers.get("/kecerdasan", Kecerdasan.findAll.bind(Kecerdasan));
 Routers.post("/kecerdasan", Kecerdasan.insertData.bind(Kecerdasan));
 Routers.post("/kecerdasan/activation", Kecerdasan.activation.bind(Kecerdasan));
