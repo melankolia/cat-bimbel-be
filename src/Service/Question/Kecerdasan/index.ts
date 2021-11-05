@@ -1,12 +1,16 @@
 import KecerdasanModel from "../../../Model/Question/Kecerdasan";
+import KecerdasanGroupModel from "../../../Model/Group/Kecerdasan";
+import { PayloadCreateKecerdasanAnswerVO, PayloadCreateKecerdasanQuestionVO, PayloadRequestKecerdasanQuestionVO } from "../../../Types";
 import { KecerdasanService } from "./index.d";
-
+import { v4 as uuidv4 } from "uuid";
 
 class Kecerdasan implements KecerdasanService {
     kecerdasanModel: KecerdasanModel;
+    kecerdasanGroupModel: KecerdasanGroupModel;
 
     constructor() {
         this.kecerdasanModel = new KecerdasanModel();
+        this.kecerdasanGroupModel = new KecerdasanGroupModel();
     }
 
     public async findAll(secureId: string): Promise<any> {
@@ -65,6 +69,76 @@ class Kecerdasan implements KecerdasanService {
             } else {
                 return Kecerdasan;
             }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async insertData(payload: PayloadRequestKecerdasanQuestionVO): Promise<any> {
+        try {
+            const [Group] = await this.kecerdasanGroupModel.findOne(payload.groupSecureId);
+            if (!Group) throw "Group Not Found";
+
+            let Question: any;
+            let FindQuestion: any;
+            let isUpdate: boolean;
+            let payload_insert = {} as PayloadCreateKecerdasanQuestionVO;
+
+            // If there is no secureId than create it
+            if (!payload.secureId) {
+                isUpdate = false;
+                payload_insert = {
+                    id_group: Group.id,
+                    secureId: uuidv4(),
+                    question: payload.question,
+                };
+
+                Question = await this.kecerdasanModel.createQuestion(payload_insert);
+                if (!Question) throw "Create Question Error";
+
+            } else {
+                isUpdate = true;
+                [FindQuestion] = await this.kecerdasanModel.findOne(payload.secureId);
+                if (!FindQuestion) throw "Question Not Found";
+
+                payload_insert = {
+                    id_group: Group.id,
+                    secureId: payload.secureId,
+                    question: payload.question,
+                }
+
+                Question = await this.kecerdasanModel.updateQuestion(payload_insert);
+                if (!Question) throw "Update Question Error";
+
+            }
+
+
+            // There is no update scenario, i use delete than create scenario to make sure data is clean
+            // Delete Answer When they already created, i check it using secureId
+            // Then re-create it 
+            if (payload.answerList.every(e => e.secureId)) {
+                const FindAnswer = await this.kecerdasanModel.findAllAnswer(payload_insert.secureId);
+                if (FindAnswer.length != 0) {
+                    const Delete = await this.kecerdasanModel.deleteAnswer(FindAnswer);
+                    if (!Delete) throw "Delete Answer Error";
+                }
+            }
+
+            const PayloadAnswer: Array<PayloadCreateKecerdasanAnswerVO> = [];
+            payload.answerList.map(e => {
+                PayloadAnswer.push({
+                    id_question: isUpdate ? FindQuestion.id : Question.insertId,
+                    secureId: uuidv4(),
+                    answer: e.answer,
+                    value: e.value,
+                    symbol: e.symbol,
+                })
+            });
+
+            const Answer = await this.kecerdasanModel.createAnswer(PayloadAnswer)
+            if (!Answer) throw "Create Answer Error";
+
+            return true
         } catch (error) {
             throw error;
         }

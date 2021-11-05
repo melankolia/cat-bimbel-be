@@ -27,6 +27,32 @@ export interface PayloadCreateKecerdasanVO {
     is_active: boolean;
 }
 
+export interface PayloadRequestKecerdasanQuestionVO {
+    groupSecureId: string;
+    secureId: string;
+    question: string;
+    answerList: Array<{
+        secureId: string;
+        answer: string;
+        value: number;
+        symbol: string;
+    }>
+}
+
+export interface PayloadCreateKecerdasanAnswerVO {
+    id_question: number;
+    secureId: string;
+    answer: string;
+    value: number;
+    symbol: string;
+}
+
+export interface PayloadCreateKecerdasanQuestionVO {
+    id_group: string | null;
+    secureId: string;
+    question: string;
+}
+
 export interface PayloadCreateKepribadianVO {
     secureId: string;
     title: string;

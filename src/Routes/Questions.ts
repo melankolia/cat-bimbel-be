@@ -5,6 +5,7 @@ const Routers: Router = express.Router();
 const Kecerdasan = new KecerdasanController();
 
 Routers.get("/kecerdasan", Kecerdasan.findAll.bind(Kecerdasan));
+Routers.post("/kecerdasan", Kecerdasan.insertData.bind(Kecerdasan));
 Routers.delete("/kecerdasan", Kecerdasan.deleteQuestion.bind(Kecerdasan));
 
 export default Routers;
