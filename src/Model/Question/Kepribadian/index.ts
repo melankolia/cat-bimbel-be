@@ -98,7 +98,7 @@ class Kepribadian implements KepribadianModel {
     }
 
     public deleteAnswer(payload: Array<{ secureId: string }>): Promise<any> {
-        console.log([payload.map(e => e?.secureId)]);
+        // console.log([payload.map(e => e?.secureId)]);
         const sql = `delete from kepribadian_answer where secureId in ?`;
 
         return new Promise((resolve, reject) => {
