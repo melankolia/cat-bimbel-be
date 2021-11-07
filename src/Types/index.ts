@@ -149,6 +149,39 @@ export interface PayloadCreateKecermatanVO {
     is_active: boolean;
 }
 
+export interface PayloadCreateKecermatanSectionVO {
+    groupSecureId: string;
+    secureId: string;
+    title: string;
+    table_name: string;
+    first_row: string;
+    second_row: string;
+    id_group: string;
+}
+
+export interface PayloadRequestKecermatanQuestionVO {
+    sectionSecureId: string;
+    secureId: string;
+    question: string;
+    answerList: Array<{
+        secureId: string;
+        value: number;
+        symbol: string;
+    }>
+}
+export interface PayloadCreateKecermatanQuestionVO {
+    id_section: string | null;
+    secureId: string;
+    question: string;
+}
+
+export interface PayloadCreateKecermatanAnswerVO {
+    id_question: number;
+    secureId: string;
+    value: number;
+    symbol: string;
+}
+
 export interface PayloadActivationVO {
     secureId: string;
     is_active: boolean;
