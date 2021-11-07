@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import Responses from "../../../Utils/Helper/Response";
 import KecermatanService from "../../../Service/Question/Kecermatan";
-import { PayloadCreateKecermatanSectionVO } from "../../../Types";
+import { PayloadCreateKecermatanSectionVO, PayloadRequestKecermatanQuestionVO } from "../../../Types";
 
 class Kecermatan {
     kecermatanService: KecermatanService
@@ -27,7 +27,7 @@ class Kecermatan {
         }
     }
 
-    public async insertData(req: Request, res: Response, next: NextFunction): Promise<any> {
+    public async insertSection(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
             if (!req.body?.groupSecureId) throw "SecureId Group Required";
         } catch (error) {
@@ -46,6 +46,29 @@ class Kecermatan {
             } as PayloadCreateKecermatanSectionVO;
 
             const Result = await this.kecermatanService.insertSection(Payload);
+            return Responses.success(res, Result);
+        } catch (error) {
+            return Responses.failed(res, error, next);
+        }
+    }
+
+    public async insertQuestion(req: Request, res: Response, next: NextFunction): Promise<any> {
+        try {
+            if (!req.body?.sectionSecureId) throw "SecureId Section Required";
+            else if (req.body?.answerList.length == 0) throw "Answer List Required at least 2 answer's"
+        } catch (error) {
+            return Responses.badRequest(res, error, next);
+        }
+
+        try {
+            const Payload = {
+                sectionSecureId: req.body.sectionSecureId,
+                secureId: req.body?.secureId || "",
+                question: req.body.question,
+                answerList: [...req.body.answerList]
+            } as PayloadRequestKecermatanQuestionVO
+
+            const Result = await this.kecermatanService.insertQuestion(Payload);
             return Responses.success(res, Result);
         } catch (error) {
             return Responses.failed(res, error, next);

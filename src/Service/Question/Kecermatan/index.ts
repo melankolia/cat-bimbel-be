@@ -1,8 +1,12 @@
 import KecermatanModel from "../../../Model/Question/Kecermatan";
 import { KecermatanService } from "./index.d";
-import { PayloadCreateKecermatanSectionVO } from "../../../Types"
+import {
+    PayloadCreateKecermatanQuestionVO,
+    PayloadRequestKecermatanQuestionVO,
+    PayloadCreateKecermatanSectionVO,
+    PayloadCreateKecermatanAnswerVO
+} from "../../../Types"
 import { v4 as uuidv4 } from "uuid";
-import { title } from "process";
 class Kecermatan implements KecermatanService {
     kecermatanModel: KecermatanModel;
 
@@ -99,9 +103,8 @@ class Kecermatan implements KecermatanService {
 
     public async insertSection(payload: PayloadCreateKecermatanSectionVO): Promise<any> {
         try {
-            const [Group] = await this.kecermatanModel.findOne(payload.groupSecureId);
+            const [Group] = await this.kecermatanModel.findOneGroup(payload.groupSecureId);
             if (!Group) throw "Kecermatan Group Not Found";
-
 
             if (!payload.secureId) {
                 const payload_create = {
@@ -128,6 +131,70 @@ class Kecermatan implements KecermatanService {
                 if (!Update) throw "Update Section Error";
 
             }
+
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async insertQuestion(payload: PayloadRequestKecermatanQuestionVO): Promise<any> {
+        try {
+            const [Section] = await this.kecermatanModel.findOneSection(payload.sectionSecureId);
+            if (!Section) throw "Kecermatan Section Not Found";
+
+            let Question: any;
+            let FindQuestion: any;
+            let payload_insert = {} as PayloadCreateKecermatanQuestionVO;
+            let isUpdate: boolean;
+
+            if (!payload.secureId) {
+                isUpdate = false;
+                payload_insert = {
+                    id_section: Section.id,
+                    secureId: uuidv4(),
+                    question: payload.question,
+                }
+                Question = await this.kecermatanModel.createQuestion(payload_insert);
+                if (!Question) throw "Create Question Error";
+            } else {
+                isUpdate = true;
+                [FindQuestion] = await this.kecermatanModel.findOneQuestion(payload.secureId);
+                if (!FindQuestion) throw "Question Not Found";
+
+                payload_insert = {
+                    id_section: Section.id,
+                    secureId: payload.secureId,
+                    question: payload.question,
+                };
+
+                Question = await this.kecermatanModel.updateQuestion(payload_insert);
+                if (!Question) throw "Update Question Error";
+            }
+
+            // There is no update scenario, i use delete than create scenario to make sure data is clean
+            // Delete Answer When they already created, i check it using secureId
+            // Then re-create it 
+            if (payload.answerList.every(e => e.secureId)) {
+                const FindAnswer = await this.kecermatanModel.findAllAnswer(payload_insert.secureId);
+                if (FindAnswer.length != 0) {
+                    const Delete = await this.kecermatanModel.deleteAnswer(FindAnswer);
+                    if (!Delete) throw "Delete Answer Error";
+                }
+            }
+
+            const PayloadAnswer: Array<PayloadCreateKecermatanAnswerVO> = [];
+            payload.answerList.map(e => {
+                PayloadAnswer.push({
+                    id_question: isUpdate ? FindQuestion.id : Question.insertId,
+                    secureId: uuidv4(),
+                    value: e.value,
+                    symbol: e.symbol,
+                })
+            });
+
+            const Answer = await this.kecermatanModel.createAnswer(PayloadAnswer)
+            if (!Answer) throw "Create Answer Error";
 
             return true;
         } catch (error) {

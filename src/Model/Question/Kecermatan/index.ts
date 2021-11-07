@@ -1,6 +1,10 @@
 import Database from "../../../Utils/Configs/db";
 import { KecermatanModel } from "./index.d";
-import { PayloadCreateKecermatanSectionVO } from '../../../Types';
+import {
+    PayloadCreateKecermatanSectionVO,
+    PayloadCreateKecermatanQuestionVO,
+    PayloadCreateKecermatanAnswerVO
+} from '../../../Types';
 
 class Kecermatan implements KecermatanModel {
     public findAll(secureId: string): Promise<any> {
@@ -30,8 +34,18 @@ class Kecermatan implements KecermatanModel {
         });
     }
 
-    public findOne(secureId: string): Promise<any> {
+    public findOneGroup(secureId: string): Promise<any> {
         const sql = `select * from kecermatan_group where secureId = ?`;
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [secureId], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
+    public findOneSection(secureId: string): Promise<any> {
+        const sql = `select * from kecermatan_section where secureId = ?`;
         return new Promise((resolve, reject) => {
             Database.query(sql, [secureId], (err: any, response: any) => {
                 if (!err) resolve(response)
@@ -91,11 +105,80 @@ class Kecermatan implements KecermatanModel {
         });
     }
 
+    public createQuestion(payload: PayloadCreateKecermatanQuestionVO): Promise<any> {
+        const sql = `insert into kecermatan_question set ?`;
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, payload, (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
+    public updateQuestion(payload: PayloadCreateKecermatanQuestionVO): Promise<any> {
+        const sql = `update kecermatan_question set question = ?
+                            where secureId = ?`;
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [payload.question, payload.secureId], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
+    public findOneQuestion(secureId: string): Promise<any> {
+        const sql = `select * from kecermatan_question where secureId = ?`;
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [secureId], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
     public deleteQuestion(secureId: string): Promise<any> {
         const sql = `delete from kecermatan_question where secureId = ?`;
 
         return new Promise((resolve, reject) => {
             Database.query(sql, [secureId], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
+    public findAllAnswer(secureId: string): Promise<any> {
+        const sql = `select * from kecermatan_answer 
+                                where id_question = (select id from kecermatan_question where secureId = ?)`;
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [secureId], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
+    public createAnswer(payload: Array<PayloadCreateKecermatanAnswerVO>): Promise<any> {
+        const sql = `insert into 
+                        kecermatan_answer (id_question, secureId, value, symbol) 
+                        values ?`;
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [payload.map(e => [e.id_question, e.secureId, e.value, e.symbol])], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
+    public deleteAnswer(payload: Array<{ secureId: string }>): Promise<any> {
+        const sql = `delete from kecermatan_answer where secureId in ?`;
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [[payload.map(e => e?.secureId)]], (err: any, response: any) => {
                 if (!err) resolve(response)
                 else reject(err)
             })
