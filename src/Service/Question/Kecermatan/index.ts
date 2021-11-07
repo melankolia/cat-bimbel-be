@@ -1,6 +1,8 @@
 import KecermatanModel from "../../../Model/Question/Kecermatan";
 import { KecermatanService } from "./index.d";
-
+import { PayloadCreateKecermatanSectionVO } from "../../../Types"
+import { v4 as uuidv4 } from "uuid";
+import { title } from "process";
 class Kecermatan implements KecermatanService {
     kecermatanModel: KecermatanModel;
 
@@ -92,6 +94,66 @@ class Kecermatan implements KecermatanService {
             }
         } catch (error) {
             throw error
+        }
+    }
+
+    public async insertSection(payload: PayloadCreateKecermatanSectionVO): Promise<any> {
+        try {
+            const [Group] = await this.kecermatanModel.findOne(payload.groupSecureId);
+            if (!Group) throw "Kecermatan Group Not Found";
+
+
+            if (!payload.secureId) {
+                const payload_create = {
+                    id_group: Group.id,
+                    secureId: uuidv4(),
+                    title: payload.title,
+                    table_name: payload.table_name,
+                    first_row: payload.first_row,
+                    second_row: payload.second_row,
+                }
+                const Create = await this.kecermatanModel.createSection(payload_create)
+                if (!Create) throw "Create Section Error";
+
+            } else {
+                const payload_update = {
+                    id_group: Group.id,
+                    secureId: payload.secureId,
+                    title: payload.title,
+                    table_name: payload.table_name,
+                    first_row: payload.first_row,
+                    second_row: payload.second_row,
+                }
+                const Update = await this.kecermatanModel.updateSection(payload_update)
+                if (!Update) throw "Update Section Error";
+
+            }
+
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async deleteSection(secureId: string): Promise<any> {
+        try {
+            const Question = await this.kecermatanModel.deleteSection(secureId);
+            if (!Question) throw "Delete Data Error";
+
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async deleteQuestion(secureId: string): Promise<any> {
+        try {
+            const Question = await this.kecermatanModel.deleteQuestion(secureId);
+            if (!Question) throw "Delete Data Error";
+
+            return true;
+        } catch (error) {
+            throw error;
         }
     }
 };

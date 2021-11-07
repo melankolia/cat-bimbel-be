@@ -149,6 +149,16 @@ export interface PayloadCreateKecermatanVO {
     is_active: boolean;
 }
 
+export interface PayloadCreateKecermatanSectionVO {
+    groupSecureId: string;
+    secureId: string;
+    title: string;
+    table_name: string;
+    first_row: string;
+    second_row: string;
+    id_group: string;
+}
+
 export interface PayloadActivationVO {
     secureId: string;
     is_active: boolean;

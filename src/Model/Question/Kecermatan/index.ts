@@ -1,5 +1,6 @@
 import Database from "../../../Utils/Configs/db";
 import { KecermatanModel } from "./index.d";
+import { PayloadCreateKecermatanSectionVO } from '../../../Types';
 
 class Kecermatan implements KecermatanModel {
     public findAll(secureId: string): Promise<any> {
@@ -20,6 +21,78 @@ class Kecermatan implements KecermatanModel {
                         left join kecermatan_group kg on ks.id_group = kg.id
                         where kg.secureId = ?
                         order by kq.id, ks.id, ka.id ASC`;
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [secureId], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
+    public findOne(secureId: string): Promise<any> {
+        const sql = `select * from kecermatan_group where secureId = ?`;
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [secureId], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
+    public createSection(payload: {
+        id_group: string;
+        secureId: string;
+        title: string;
+        table_name: string;
+        first_row: string;
+        second_row: string;
+    }): Promise<any> {
+        return new Promise((resolve, reject) => {
+            const sql = `insert into kecermatan_section SET ?`;
+
+            Database.query(sql, payload, (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
+    public updateSection(payload: {
+        id_group: string;
+        secureId: string;
+        title: string;
+        table_name: string;
+        first_row: string;
+        second_row: string;
+    }): Promise<any> {
+        const sql = `update kecermatan_section set
+                            title = ?,
+                            table_name = ?,
+                            first_row = ?,
+                            second_row = ?
+                            where secureId = ?`;
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [payload.title, payload.table_name, payload.first_row, payload.second_row, payload.secureId], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
+    public deleteSection(secureId: string): Promise<any> {
+        const sql = `delete from kecermatan_section where secureId = ?`;
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [secureId], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
+    public deleteQuestion(secureId: string): Promise<any> {
+        const sql = `delete from kecermatan_question where secureId = ?`;
 
         return new Promise((resolve, reject) => {
             Database.query(sql, [secureId], (err: any, response: any) => {

@@ -23,7 +23,8 @@ Routers.post("/kejiwaan", Kejiwaan.insertData.bind(Kejiwaan));
 Routers.delete("/kejiwaan", Kejiwaan.deleteQuestion.bind(Kejiwaan));
 
 Routers.get("/kecermatan", Kecermatan.findAll.bind(Kecermatan));
-// Routers.post("/kecermatan", Kejiwaan.insertData.bind(Kejiwaan));
-// Routers.delete("/kecermatan", Kejiwaan.deleteQuestion.bind(Kejiwaan));
+Routers.post("/kecermatan/section", Kecermatan.insertData.bind(Kecermatan));
+Routers.delete("/kecermatan/section", Kecermatan.deleteSection.bind(Kecermatan));
+Routers.delete("/kecermatan/question", Kecermatan.deleteQuestion.bind(Kecermatan));
 
 export default Routers;
