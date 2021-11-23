@@ -62,6 +62,13 @@ class Kepribadian implements KepribadianService {
             const Kepribadian = await this.kepribadianModel.findAll();
             if (!Kepribadian) throw "Get Data Error";
 
+            Kepribadian.map((e: any) => {
+                e.modeAdd = false
+                e.loadingDelete = false
+                e.loadingActivate = false
+                e.loadingEdit = false
+            });
+
             return Kepribadian
         } catch (error) {
             throw error;

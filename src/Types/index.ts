@@ -11,6 +11,11 @@ export interface PayloadUserCreateVO {
     type: string;
 }
 
+export interface PayloadUserStatusVO {
+    secureId: string;
+    is_online: boolean
+}
+
 export interface PayloadListUserVO {
     // limit: string;
     // page: string;
