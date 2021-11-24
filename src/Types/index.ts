@@ -108,8 +108,10 @@ export interface PayloadCreateKejiwaanVO {
 
 export interface PayloadRequestKejiwaanQuestionVO {
     groupSecureId: string;
-    secureId: string;
-    question: string;
+    question: {
+        secureId: string;
+        question: string;
+    };
     answerList: Array<{
         secureId: string;
         answer: string;
