@@ -71,8 +71,10 @@ export interface PayloadCreateKepribadianVO {
 
 export interface PayloadRequestKepribadianQuestionVO {
     groupSecureId: string;
-    secureId: string;
-    question: string;
+    question: {
+        secureId: string;
+        question: string;
+    };
     answerList: Array<{
         secureId: string;
         answer: string;
