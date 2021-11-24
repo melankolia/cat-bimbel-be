@@ -15,6 +15,9 @@ class Kepribadian implements KepribadianService {
 
     public async findAll(secureId: string): Promise<any> {
         try {
+            const [KepribadianDetail] = await this.kepribadianGroupModel.findOne(secureId);
+            if (!KepribadianDetail) throw "Group Not Found";
+
             const Kepribadian = await this.kepribadianModel.findAll(secureId);
             if (!Kepribadian) throw "Get Data Error";
             if (Kepribadian.length != 0) {
@@ -25,6 +28,8 @@ class Kepribadian implements KepribadianService {
                         secureId: string;
                         question: string;
                     };
+                    modeAdd: boolean;
+                    loadingDelete: boolean;
                     answerList: Array<{
                         secureId: string;
                         answer: string;
@@ -44,6 +49,8 @@ class Kepribadian implements KepribadianService {
                                 secureId: e.question_secureId,
                                 question: e.question
                             },
+                            modeAdd: false,
+                            loadingDelete: false,
                             answerList: [
                                 {
                                     secureId: e.answer_secureId,
@@ -65,9 +72,27 @@ class Kepribadian implements KepribadianService {
                     }
                 })
 
-                return Result;
+                const ResultVO = {
+                    title: KepribadianDetail.title,
+                    description: KepribadianDetail.description,
+                    time: KepribadianDetail.time,
+                    is_active: KepribadianDetail.is_active,
+                    type: KepribadianDetail.type,
+                    result: [...Result]
+                }
+
+                return ResultVO;
             } else {
-                return Kepribadian;
+                const ResultVO = {
+                    title: KepribadianDetail.title,
+                    description: KepribadianDetail.description,
+                    time: KepribadianDetail.time,
+                    is_active: KepribadianDetail.is_active,
+                    type: KepribadianDetail.type,
+                    result: [...Kepribadian]
+                }
+
+                return ResultVO
             }
         } catch (error) {
             throw error;
