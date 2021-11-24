@@ -34,8 +34,10 @@ export interface PayloadCreateKecerdasanVO {
 
 export interface PayloadRequestKecerdasanQuestionVO {
     groupSecureId: string;
-    secureId: string;
-    question: string;
+    question: {
+        secureId: string;
+        question: string;
+    };
     answerList: Array<{
         secureId: string;
         answer: string;

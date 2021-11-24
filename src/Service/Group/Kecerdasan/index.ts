@@ -76,6 +76,17 @@ class Kecerdasan implements KecerdasanService {
         }
     }
 
+    public async findOne(secureId: string): Promise<any> {
+        try {
+            const [Kecerdasan] = await this.kecerdasanModel.findOne(secureId);
+            if (!Kecerdasan) throw "Data Not Found";
+
+            return Kecerdasan
+        } catch (error) {
+            throw error;
+        }
+    }
+
 };
 
 export default Kecerdasan;
