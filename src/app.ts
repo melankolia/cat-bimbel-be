@@ -6,7 +6,6 @@ import helmet from "helmet";
 import path from "path";
 import dotenv from "dotenv";
 import fs from "fs";
-import { Request, Response, NextFunction } from "express";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
@@ -18,11 +17,12 @@ var accessLogStream = fs.createWriteStream(path.join(__dirname, "access.log"), {
 });
 
 app.use(logger("combined", { stream: accessLogStream }));
+app.use(logger("combined"))
 
 // Manage cors, menentukan situs mana yang boleh akses, situs yang mana yang di blacklist
 app.use(cors());
 
-app.use("/photos-service", express.static(path.join(__dirname, "static-img")));
+// app.use("/photos-service", express.static(path.join(__dirname, "static-img")));
 
 // Init Body Parser
 app.use(express.json());
