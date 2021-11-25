@@ -197,3 +197,10 @@ export interface PayloadActivationVO {
     secureId: string;
     is_active: boolean;
 }
+
+export interface PayloadPeraturanCreateVO {
+    secureId: string;
+    type: string;
+    description: string;
+    rule_type: string;
+}
