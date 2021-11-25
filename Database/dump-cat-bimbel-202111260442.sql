@@ -145,7 +145,7 @@ CREATE TABLE `kecermatan_group` (
   `time` int DEFAULT NULL,
   `is_active` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +154,7 @@ CREATE TABLE `kecermatan_group` (
 
 LOCK TABLES `kecermatan_group` WRITE;
 /*!40000 ALTER TABLE `kecermatan_group` DISABLE KEYS */;
-INSERT INTO `kecermatan_group` VALUES (2,'0e3c9ebf-ccb1-4272-93fe-f06671cd48c8','Kecermatan Baru','Ini adalah contoh description',23,0),(3,'65e39eef-29b3-4d41-9ce1-9ccdb40fbcff','Kecermatan Baru 44','Ini adalah contoh description 44',23,0),(14,'700394cf-14c6-4379-bebe-bb2eff17fda6','Baru 123','Baru 123',5,0);
+INSERT INTO `kecermatan_group` VALUES (3,'65e39eef-29b3-4d41-9ce1-9ccdb40fbcff','Kecermatan Baru 44','Ini adalah contoh description 44',23,0),(14,'700394cf-14c6-4379-bebe-bb2eff17fda6','Baru 123','Baru 123',5,0),(17,'b0071e89-2d7a-4a59-ab53-8b30c4b7a122','Good','Good Soal',1,0);
 /*!40000 ALTER TABLE `kecermatan_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,7 +213,7 @@ CREATE TABLE `kecermatan_section` (
 
 LOCK TABLES `kecermatan_section` WRITE;
 /*!40000 ALTER TABLE `kecermatan_section` DISABLE KEYS */;
-INSERT INTO `kecermatan_section` VALUES (15,'Section 3','Kolom Acuan Soal','A, B, C, D, E','6, 6, 6, 6, 2',2,'a9e9e79b-5d29-42fc-ae35-6139619ff2d3'),(16,'Section 5','Kolom Update Dari Postman','A, B, C, D, E','1, 2, 3, 4, 5',2,'23bc3968-32a9-4b14-a44a-30c4a48b3377'),(17,NULL,'Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',3,'db8b10cc-a073-4147-9832-afaf76ba9dce'),(18,'BARU BARU','Kolom Acuan Soal','A, B, C, D, E','1, 2, 3, 4, 5',NULL,'ec38a087-39fb-49c9-90c7-d93de314ffd5'),(19,'123123','Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',NULL,'861d85a1-bd75-459b-ad73-0294dde36758'),(20,NULL,'Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',NULL,'7cefe9f5-37bf-4a3c-8eb6-6e32847954a1'),(21,NULL,'Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',NULL,'e5e3e2f1-82b5-4bfc-a8b9-d2705a48a58e'),(22,'Bebebe','Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',NULL,'78a05893-4b32-4725-bb22-0175c0f91c39'),(23,'Heart Break','Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',NULL,'ee3f0153-eeb3-44a5-bdc3-9567da9b557c'),(24,'Heart Break 3','Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',NULL,'ce7d34ff-abcf-4b3c-9f2a-855733484894'),(26,'BABABABA2','Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',14,'33d01260-4aae-4659-bee5-b441fee8b7aa');
+INSERT INTO `kecermatan_section` VALUES (15,'Section 3','Kolom Acuan Soal','A, B, C, D, E','6, 6, 6, 6, 2',NULL,'a9e9e79b-5d29-42fc-ae35-6139619ff2d3'),(16,'Section 5','Kolom Update Dari Postman','A, B, C, D, E','1, 2, 3, 4, 5',NULL,'23bc3968-32a9-4b14-a44a-30c4a48b3377'),(17,NULL,'Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',3,'db8b10cc-a073-4147-9832-afaf76ba9dce'),(18,'BARU BARU','Kolom Acuan Soal','A, B, C, D, E','1, 2, 3, 4, 5',NULL,'ec38a087-39fb-49c9-90c7-d93de314ffd5'),(19,'123123','Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',NULL,'861d85a1-bd75-459b-ad73-0294dde36758'),(20,NULL,'Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',NULL,'7cefe9f5-37bf-4a3c-8eb6-6e32847954a1'),(21,NULL,'Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',NULL,'e5e3e2f1-82b5-4bfc-a8b9-d2705a48a58e'),(22,'Bebebe','Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',NULL,'78a05893-4b32-4725-bb22-0175c0f91c39'),(23,'Heart Break','Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',NULL,'ee3f0153-eeb3-44a5-bdc3-9567da9b557c'),(24,'Heart Break 3','Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',NULL,'ce7d34ff-abcf-4b3c-9f2a-855733484894'),(26,'BABABABA2','Kolom Acuan Soal','A, B, C, D, E','0, 0, 0, 0, 0',14,'33d01260-4aae-4659-bee5-b441fee8b7aa');
 /*!40000 ALTER TABLE `kecermatan_section` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -391,6 +391,33 @@ INSERT INTO `kepribadian_question` VALUES (2,'Testing Create Question\'s','f1082
 UNLOCK TABLES;
 
 --
+-- Table structure for table `peraturan`
+--
+
+DROP TABLE IF EXISTS `peraturan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `peraturan` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `secureId` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `type` enum('soal','siswa') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'soal',
+  `description` text,
+  `rule_type` enum('kepribadian','kecermatan','kecerdasan','kejiwaan') DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `peraturan`
+--
+
+LOCK TABLES `peraturan` WRITE;
+/*!40000 ALTER TABLE `peraturan` DISABLE KEYS */;
+INSERT INTO `peraturan` VALUES (2,'059a4f36-615e-4aa7-9543-358f75826a12','soal','12345','kepribadian'),(3,'d7cae921-317b-4407-a45f-4ac4d72a7e62','siswa','12345 bandar','kepribadian'),(4,'c3b8af45-5720-4bef-a492-f674b75a35a9','soal','Kecermatan Soal','kecermatan'),(5,'74f18182-a222-4168-ade7-3247a11756cd','siswa','Kecermatan Siswa','kecermatan'),(6,'33bd5c52-6f1b-4362-b480-b4f381c8ac6c','siswa','<ul>\n<li>\nUlala\n</li>\n</ul>','kecerdasan'),(7,'7c2482c1-6eb5-4235-90e0-4382ceadc7d1','soal','BANG AYOM <br />\n<p class=\"text-h5\"> HA HA HA </p>','kecerdasan'),(8,'4e3e7828-545f-4bd1-b35f-06342786af25','soal','12345 bandar','kejiwaan'),(9,'88e29819-7657-4c27-9623-82602b4cf6e8','siswa','12345 bandar','kejiwaan');
+/*!40000 ALTER TABLE `peraturan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `User`
 --
 
@@ -415,7 +442,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (1,'7d6ea2a9-d396-43c9-aa5d-f3f394a168f6','admin','admin','admin',1,'admin'),(2,'6e4bb067-3f52-4bc6-bcd9-b4964d61ef79','ageng','123456Aa','Ageng Setyo Nugroho',1,'user'),(28,'f49bfa4e-6a6c-4990-b1b1-96f82cfe782c','Golank','123456','Good thing\'s',0,'user');
+INSERT INTO `User` VALUES (1,'7d6ea2a9-d396-43c9-aa5d-f3f394a168f6','admin','admin','admin',1,'admin'),(2,'6e4bb067-3f52-4bc6-bcd9-b4964d61ef79','ageng','qweqwe','Ageng Setyo Nugroho',1,'user'),(28,'f49bfa4e-6a6c-4990-b1b1-96f82cfe782c','Golank','123456','Good thing\'s',0,'user');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -436,4 +463,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-25 22:22:09
+-- Dump completed on 2021-11-26  4:42:13
