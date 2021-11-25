@@ -18,6 +18,7 @@ var accessLogStream = fs.createWriteStream(path.join(__dirname, "access.log"), {
 });
 
 app.use(logger("combined", { stream: accessLogStream }));
+app.use(logger("combined"))
 
 // Manage cors, menentukan situs mana yang boleh akses, situs yang mana yang di blacklist
 app.use(cors());
