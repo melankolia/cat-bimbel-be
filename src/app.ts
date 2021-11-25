@@ -34,6 +34,6 @@ app.use(helmet.xssFilter());
 // Init Router
 app.use("/", Router);
 
-app.listen(process.env.SERVER_PORT || 5000, () =>
-    console.log(`Server Running di Port ${process.env.SERVER_PORT || 5000}`)
+app.listen(process.env.PORT || 80, () =>
+    console.log(`Server Running di Port ${process.env.PORT || 80}`)
 );
