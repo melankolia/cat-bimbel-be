@@ -15,6 +15,9 @@ class Kepribadian implements KepribadianService {
 
     public async findAll(secureId: string): Promise<any> {
         try {
+            const [KepribadianDetail] = await this.kepribadianGroupModel.findOne(secureId);
+            if (!KepribadianDetail) throw "Group Not Found";
+
             const Kepribadian = await this.kepribadianModel.findAll(secureId);
             if (!Kepribadian) throw "Get Data Error";
             if (Kepribadian.length != 0) {
@@ -25,6 +28,8 @@ class Kepribadian implements KepribadianService {
                         secureId: string;
                         question: string;
                     };
+                    modeAdd: boolean;
+                    loadingDelete: boolean;
                     answerList: Array<{
                         secureId: string;
                         answer: string;
@@ -44,6 +49,8 @@ class Kepribadian implements KepribadianService {
                                 secureId: e.question_secureId,
                                 question: e.question
                             },
+                            modeAdd: false,
+                            loadingDelete: false,
                             answerList: [
                                 {
                                     secureId: e.answer_secureId,
@@ -65,9 +72,27 @@ class Kepribadian implements KepribadianService {
                     }
                 })
 
-                return Result;
+                const ResultVO = {
+                    title: KepribadianDetail.title,
+                    description: KepribadianDetail.description,
+                    time: KepribadianDetail.time,
+                    is_active: KepribadianDetail.is_active,
+                    type: KepribadianDetail.type,
+                    result: [...Result]
+                }
+
+                return ResultVO;
             } else {
-                return Kepribadian;
+                const ResultVO = {
+                    title: KepribadianDetail.title,
+                    description: KepribadianDetail.description,
+                    time: KepribadianDetail.time,
+                    is_active: KepribadianDetail.is_active,
+                    type: KepribadianDetail.type,
+                    result: [...Kepribadian]
+                }
+
+                return ResultVO
             }
         } catch (error) {
             throw error;
@@ -85,12 +110,12 @@ class Kepribadian implements KepribadianService {
             let payload_insert = {} as PayloadCreateKepribadianQuestionVO;
 
             // If there is no secureId than create it
-            if (!payload.secureId) {
+            if (!payload.question.secureId) {
                 isUpdate = false;
                 payload_insert = {
                     id_group: Group.id,
                     secureId: uuidv4(),
-                    question: payload.question,
+                    question: payload.question.question,
                 };
 
                 Question = await this.kepribadianModel.createQuestion(payload_insert);
@@ -98,13 +123,13 @@ class Kepribadian implements KepribadianService {
 
             } else {
                 isUpdate = true;
-                [FindQuestion] = await this.kepribadianModel.findOne(payload.secureId);
+                [FindQuestion] = await this.kepribadianModel.findOne(payload.question.secureId);
                 if (!FindQuestion) throw "Question Not Found";
 
                 payload_insert = {
                     id_group: Group.id,
-                    secureId: payload.secureId,
-                    question: payload.question,
+                    secureId: payload.question.secureId,
+                    question: payload.question.question,
                 }
 
                 Question = await this.kepribadianModel.updateQuestion(payload_insert);
@@ -138,7 +163,22 @@ class Kepribadian implements KepribadianService {
             const Answer = await this.kepribadianModel.createAnswer(PayloadAnswer)
             if (!Answer) throw "Create Answer Error";
 
-            return true
+            const Result: any = {
+                ...payload,
+                modeAdd: false,
+                loadingDelete: false,
+                question: { question: payload_insert.question, secureId: payload_insert.secureId },
+                answerList: [...PayloadAnswer.map(e => {
+                    return {
+                        secureId: e.secureId,
+                        answer: e.answer,
+                        value: e.value,
+                        symbol: e.symbol,
+                    }
+                })]
+            };
+
+            return Result
         } catch (error) {
             throw error;
         }

@@ -21,6 +21,12 @@ const Responses = {
         });
         next(result);
     },
+    tokenError: (res: Response, result: any, next: NextFunction): void => {
+        res.status(401).send({
+            message: "ERROR",
+            result
+        })
+    }
 };
 
 export default Responses;

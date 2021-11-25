@@ -62,6 +62,13 @@ class Kecermatan implements KecermatanService {
             const Kecermatan = await this.kecermatanModel.findAll();
             if (!Kecermatan) throw "Get Data Error";
 
+            Kecermatan.map((e: any) => {
+                e.modeAdd = false
+                e.loadingDelete = false
+                e.loadingActivate = false
+                e.loadingEdit = false
+            });
+
             return Kecermatan
         } catch (error) {
             throw error;

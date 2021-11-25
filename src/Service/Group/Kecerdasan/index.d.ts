@@ -6,4 +6,5 @@ export interface KecerdasanService {
     deleteData(secureId: string): Promise<any>
     activation(payload: PayloadActivationVO): Promise<any>
     findAll(): Promise<any>
+    findOne(secureId: string): Promise<any>
 }

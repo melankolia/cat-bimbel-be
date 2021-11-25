@@ -70,13 +70,16 @@ class Kepribadian implements KepribadianModel {
 
     public findAll(): Promise<any> {
         const sql = `SELECT 
-                        secureId,
+                        kg.secureId,
                         title,
                         description,
                         time,
                         is_active,
+                        count(id_group) as total_soal,
                         type
-                        FROM kepribadian_group`;
+                        FROM kepribadian_group kg
+                    left join kepribadian_question kq on kg.id = kq.id_group
+                    group by kg.id;`;
 
         return new Promise((resolve, reject) => {
             Database.query(sql, (err: any, response: any) => {

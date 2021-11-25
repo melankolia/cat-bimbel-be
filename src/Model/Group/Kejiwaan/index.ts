@@ -69,12 +69,15 @@ class Kejiwaan implements KejiwaanModel {
 
     public findAll(): Promise<any> {
         const sql = `SELECT 
-                        secureId,
+                        kg.secureId,
                         title,
                         description,
                         time,
-                        is_active
-                        FROM kejiwaan_group`;
+                        is_active,
+                        count(id_group) as total_soal
+                        FROM kejiwaan_group kg
+                    left join kejiwaan_question kq on kg.id = kq.id_group
+                    group by kg.id;`;
 
         return new Promise((resolve, reject) => {
             Database.query(sql, (err: any, response: any) => {

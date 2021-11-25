@@ -15,6 +15,9 @@ class Kecerdasan implements KecerdasanService {
 
     public async findAll(secureId: string): Promise<any> {
         try {
+            const [KecerdasanDetail] = await this.kecerdasanGroupModel.findOne(secureId);
+            if (!KecerdasanDetail) throw "Group Not Found";
+
             const Kecerdasan = await this.kecerdasanModel.findAll(secureId);
             if (!Kecerdasan) throw "Get Data Error";
             if (Kecerdasan.length != 0) {
@@ -25,6 +28,8 @@ class Kecerdasan implements KecerdasanService {
                         secureId: string;
                         question: string;
                     };
+                    modeAdd: boolean;
+                    loadingDelete: boolean;
                     answerList: Array<{
                         secureId: string;
                         answer: string;
@@ -44,6 +49,8 @@ class Kecerdasan implements KecerdasanService {
                                 secureId: e.question_secureId,
                                 question: e.question
                             },
+                            modeAdd: false,
+                            loadingDelete: false,
                             answerList: [
                                 {
                                     secureId: e.answer_secureId,
@@ -65,9 +72,26 @@ class Kecerdasan implements KecerdasanService {
                     }
                 })
 
-                return Result;
+                const ResultVO = {
+                    title: KecerdasanDetail.title,
+                    description: KecerdasanDetail.description,
+                    time: KecerdasanDetail.time,
+                    is_active: KecerdasanDetail.is_active,
+                    result: [...Result]
+                }
+
+                return ResultVO;
             } else {
-                return Kecerdasan;
+
+                const ResultVO = {
+                    title: KecerdasanDetail.title,
+                    description: KecerdasanDetail.description,
+                    time: KecerdasanDetail.time,
+                    is_active: KecerdasanDetail.is_active,
+                    result: [...Kecerdasan]
+                }
+
+                return ResultVO;
             }
         } catch (error) {
             throw error;
@@ -85,12 +109,12 @@ class Kecerdasan implements KecerdasanService {
             let payload_insert = {} as PayloadCreateKecerdasanQuestionVO;
 
             // If there is no secureId than create it
-            if (!payload.secureId) {
+            if (!payload.question.secureId) {
                 isUpdate = false;
                 payload_insert = {
                     id_group: Group.id,
                     secureId: uuidv4(),
-                    question: payload.question,
+                    question: payload.question.question,
                 };
 
                 Question = await this.kecerdasanModel.createQuestion(payload_insert);
@@ -98,13 +122,13 @@ class Kecerdasan implements KecerdasanService {
 
             } else {
                 isUpdate = true;
-                [FindQuestion] = await this.kecerdasanModel.findOne(payload.secureId);
+                [FindQuestion] = await this.kecerdasanModel.findOne(payload.question.secureId);
                 if (!FindQuestion) throw "Question Not Found";
 
                 payload_insert = {
                     id_group: Group.id,
-                    secureId: payload.secureId,
-                    question: payload.question,
+                    secureId: payload.question.secureId,
+                    question: payload.question.question,
                 }
 
                 Question = await this.kecerdasanModel.updateQuestion(payload_insert);
@@ -138,7 +162,22 @@ class Kecerdasan implements KecerdasanService {
             const Answer = await this.kecerdasanModel.createAnswer(PayloadAnswer)
             if (!Answer) throw "Create Answer Error";
 
-            return true
+            const Result: any = {
+                ...payload,
+                modeAdd: false,
+                loadingDelete: false,
+                question: { question: payload_insert.question, secureId: payload_insert.secureId },
+                answerList: [...PayloadAnswer.map(e => {
+                    return {
+                        secureId: e.secureId,
+                        answer: e.answer,
+                        value: e.value,
+                        symbol: e.symbol,
+                    }
+                })]
+            };
+
+            return Result;
         } catch (error) {
             throw error;
         }

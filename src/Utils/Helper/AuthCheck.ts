@@ -22,7 +22,7 @@ const AuthCheck = {
                 }
             });
         } catch (error) {
-            return Responses.failed(res, error, next);
+            return Responses.tokenError(res, error, next);
         }
     }
 }

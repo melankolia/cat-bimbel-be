@@ -38,8 +38,10 @@ class Kejiwaan {
         try {
             const Payload = {
                 groupSecureId: req.body.groupSecureId,
-                secureId: req.body?.secureId || "",
-                question: req.body.question,
+                question: {
+                    question: req.body.question?.question,
+                    secureId: req.body.question?.secureId || ""
+                },
                 answerList: [...req.body.answerList]
             } as PayloadRequestKejiwaanQuestionVO
 

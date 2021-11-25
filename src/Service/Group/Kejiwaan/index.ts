@@ -62,6 +62,13 @@ class Kejiwaan implements KejiwaanService {
             const Kejiwaan = await this.kejiwaanModel.findAll();
             if (!Kejiwaan) throw "Get Data Error";
 
+            Kejiwaan.map((e: any) => {
+                e.modeAdd = false
+                e.loadingDelete = false
+                e.loadingActivate = false
+                e.loadingEdit = false
+            });
+
             return Kejiwaan
         } catch (error) {
             throw error;

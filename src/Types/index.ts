@@ -11,6 +11,11 @@ export interface PayloadUserCreateVO {
     type: string;
 }
 
+export interface PayloadUserStatusVO {
+    secureId: string;
+    is_online: boolean
+}
+
 export interface PayloadListUserVO {
     // limit: string;
     // page: string;
@@ -29,8 +34,10 @@ export interface PayloadCreateKecerdasanVO {
 
 export interface PayloadRequestKecerdasanQuestionVO {
     groupSecureId: string;
-    secureId: string;
-    question: string;
+    question: {
+        secureId: string;
+        question: string;
+    };
     answerList: Array<{
         secureId: string;
         answer: string;
@@ -64,8 +71,10 @@ export interface PayloadCreateKepribadianVO {
 
 export interface PayloadRequestKepribadianQuestionVO {
     groupSecureId: string;
-    secureId: string;
-    question: string;
+    question: {
+        secureId: string;
+        question: string;
+    };
     answerList: Array<{
         secureId: string;
         answer: string;
@@ -99,8 +108,10 @@ export interface PayloadCreateKejiwaanVO {
 
 export interface PayloadRequestKejiwaanQuestionVO {
     groupSecureId: string;
-    secureId: string;
-    question: string;
+    question: {
+        secureId: string;
+        question: string;
+    };
     answerList: Array<{
         secureId: string;
         answer: string;

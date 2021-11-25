@@ -23,6 +23,12 @@ class User implements UserService {
 
             if (!(User.password == PayloadUser.password)) throw "Password is Incorrect"
 
+            const Status = await this.userModel.updateStatus({
+                secureId: User.secureId,
+                is_online: true
+            })
+            if (!Status) throw "Error Update Status"
+
             const token = JWT.sign({ username: User.username }, process.env.SECRET_KEY as string, { algorithm: 'HS256', expiresIn: '6h' });
 
             const Response = {

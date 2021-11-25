@@ -1,4 +1,5 @@
 import KecermatanModel from "../../../Model/Question/Kecermatan";
+import KecermatanGroupModel from "../../../Model/Group/Kecermatan";
 import { KecermatanService } from "./index.d";
 import {
     PayloadCreateKecermatanQuestionVO,
@@ -9,13 +10,18 @@ import {
 import { v4 as uuidv4 } from "uuid";
 class Kecermatan implements KecermatanService {
     kecermatanModel: KecermatanModel;
+    kecermatanGroupModel: KecermatanGroupModel;
 
     constructor() {
         this.kecermatanModel = new KecermatanModel();
+        this.kecermatanGroupModel = new KecermatanGroupModel();
     }
 
     public async findAll(secureId: string): Promise<any> {
         try {
+            const [KecermatanDetail] = await this.kecermatanGroupModel.findOne(secureId);
+            if (!KecermatanDetail) throw "Group Not Found";
+
             const Kecermatan = await this.kecermatanModel.findAll(secureId);
             if (!Kecermatan) throw "Get Data Error";
 
@@ -26,9 +32,15 @@ class Kecermatan implements KecermatanService {
                     tableName: string;
                     firstRow: string;
                     secondRow: string;
+                    modeAdd: boolean;
+                    loadingSubmit: boolean;
+                    loadingDelete: boolean;
                     question: Array<{
                         secureId: string;
                         title: string;
+                        modeAdd: boolean;
+                        loadingSubmit: boolean;
+                        loadingDelete: boolean;
                         answerList: Array<{
                             secureId: string;
                             symbol: string;
@@ -41,23 +53,23 @@ class Kecermatan implements KecermatanService {
                     const lastSectionIndex = Result.length - 1;
                     const lastQuestionIndex = Result[lastSectionIndex]?.question.length - 1
                     const pointer = i == 0 ? 0 : Result.length;
-                    // console.log("---------------------------------------------------------");
-                    // console.log(`Loopingan ${i}`);
-                    // console.log(`Pointer ${pointer}`);
-                    // console.log({ lastSectionIndex, lastQuestionIndex });
-                    // console.log(Result[lastSectionIndex]);
-                    // console.log(Result[lastSectionIndex]?.question[lastQuestionIndex]);
                     if (i == 0 || e.section_secureId != Result[lastSectionIndex]?.secureId) {
                         Result[pointer] = {
                             secureId: e.section_secureId,
                             title: e.title,
                             tableName: e.table_name,
-                            firstRow: e.first_row,
-                            secondRow: e.second_row,
+                            firstRow: e?.first_row?.split(", "),
+                            secondRow: e?.second_row?.split(", "),
+                            modeAdd: false,
+                            loadingSubmit: false,
+                            loadingDelete: false,
                             question: [
                                 {
                                     secureId: e.question_secureId,
-                                    title: e.question,
+                                    title: e?.question?.split(", "),
+                                    modeAdd: false,
+                                    loadingSubmit: false,
+                                    loadingDelete: false,
                                     answerList: [
                                         {
                                             secureId: e.answer_secureId,
@@ -73,7 +85,10 @@ class Kecermatan implements KecermatanService {
                         if (e.question_secureId != Result[lastSectionIndex].question[lastQuestionIndex]?.secureId) {
                             Result[lastSectionIndex].question.push({
                                 secureId: e.question_secureId,
-                                title: e.question,
+                                title: e?.question?.split(", "),
+                                modeAdd: false,
+                                loadingSubmit: false,
+                                loadingDelete: false,
                                 answerList: [
                                     {
                                         secureId: e.answer_secureId,
@@ -92,9 +107,25 @@ class Kecermatan implements KecermatanService {
                         }
                     }
                 })
-                return Result;
+                const ResultVO = {
+                    title: KecermatanDetail.title,
+                    time: KecermatanDetail.time,
+                    description: KecermatanDetail.description,
+                    is_active: KecermatanDetail.is_active,
+                    result: [...Result]
+                }
+
+                return ResultVO;
             } else {
-                return Kecermatan;
+                const ResultVO = {
+                    title: KecermatanDetail.title,
+                    time: KecermatanDetail.time,
+                    description: KecermatanDetail.description,
+                    is_active: KecermatanDetail.is_active,
+                    result: [...Kecermatan]
+                }
+
+                return ResultVO;
             }
         } catch (error) {
             throw error
@@ -106,33 +137,38 @@ class Kecermatan implements KecermatanService {
             const [Group] = await this.kecermatanModel.findOneGroup(payload.groupSecureId);
             if (!Group) throw "Kecermatan Group Not Found";
 
+            const Payload: any = {
+                id_group: Group.id,
+                title: payload.title,
+                table_name: payload.table_name,
+                first_row: payload.first_row,
+                second_row: payload.second_row,
+            }
+
             if (!payload.secureId) {
-                const payload_create = {
-                    id_group: Group.id,
-                    secureId: uuidv4(),
-                    title: payload.title,
-                    table_name: payload.table_name,
-                    first_row: payload.first_row,
-                    second_row: payload.second_row,
-                }
-                const Create = await this.kecermatanModel.createSection(payload_create)
+                Payload.secureId = uuidv4();
+                const Create = await this.kecermatanModel.createSection(Payload)
                 if (!Create) throw "Create Section Error";
 
             } else {
-                const payload_update = {
-                    id_group: Group.id,
-                    secureId: payload.secureId,
-                    title: payload.title,
-                    table_name: payload.table_name,
-                    first_row: payload.first_row,
-                    second_row: payload.second_row,
-                }
-                const Update = await this.kecermatanModel.updateSection(payload_update)
+                Payload.secureId = payload.secureId
+                const Update = await this.kecermatanModel.updateSection(Payload)
                 if (!Update) throw "Update Section Error";
 
             }
 
-            return true;
+            const Result: any = {
+                secureId: Payload.secureId,
+                title: payload.title,
+                table_name: payload.table_name,
+                first_row: payload.first_row.split(", "),
+                second_row: payload.second_row.split(", "),
+                modeAdd: false,
+                loadingSubmit: false,
+                loadingDelete: false,
+            }
+
+            return Result
         } catch (error) {
             throw error;
         }
@@ -196,7 +232,23 @@ class Kecermatan implements KecermatanService {
             const Answer = await this.kecermatanModel.createAnswer(PayloadAnswer)
             if (!Answer) throw "Create Answer Error";
 
-            return true;
+            const ResultVO: any = {
+                sectionSecureId: payload.sectionSecureId,
+                secureId: payload_insert.secureId,
+                title: payload.question.split(", "),
+                modeAdd: false,
+                loadingDelete: false,
+                loadingSubmit: false,
+                answerList: [...PayloadAnswer.map(e => {
+                    return {
+                        secureId: e.secureId,
+                        value: e.value,
+                        symbol: e.symbol
+                    }
+                })]
+            }
+
+            return ResultVO;
         } catch (error) {
             throw error;
         }

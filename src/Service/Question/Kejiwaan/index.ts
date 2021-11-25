@@ -15,6 +15,9 @@ class Kejiwaan implements KejiwaanService {
 
     public async findAll(secureId: string): Promise<any> {
         try {
+            const [KejiwaanDetail] = await this.kejiwaanGroupModel.findOne(secureId);
+            if (!KejiwaanDetail) throw "Group Not Found";
+
             const Kejiwaan = await this.kejiwaanModel.findAll(secureId);
             if (!Kejiwaan) throw "Get Data Error";
             if (Kejiwaan.length != 0) {
@@ -25,6 +28,8 @@ class Kejiwaan implements KejiwaanService {
                         secureId: string;
                         question: string;
                     };
+                    modeAdd: boolean;
+                    loadingDelete: boolean;
                     answerList: Array<{
                         secureId: string;
                         answer: string;
@@ -44,6 +49,8 @@ class Kejiwaan implements KejiwaanService {
                                 secureId: e.question_secureId,
                                 question: e.question
                             },
+                            modeAdd: false,
+                            loadingDelete: false,
                             answerList: [
                                 {
                                     secureId: e.answer_secureId,
@@ -65,9 +72,25 @@ class Kejiwaan implements KejiwaanService {
                     }
                 })
 
-                return Result;
+                const ResultVO = {
+                    title: KejiwaanDetail.title,
+                    description: KejiwaanDetail.description,
+                    time: KejiwaanDetail.time,
+                    is_active: KejiwaanDetail.is_active,
+                    result: [...Result]
+                }
+
+                return ResultVO;
             } else {
-                return Kejiwaan;
+                const ResultVO = {
+                    title: KejiwaanDetail.title,
+                    description: KejiwaanDetail.description,
+                    time: KejiwaanDetail.time,
+                    is_active: KejiwaanDetail.is_active,
+                    result: [...Kejiwaan]
+                }
+
+                return ResultVO;
             }
         } catch (error) {
             throw error;
@@ -85,12 +108,12 @@ class Kejiwaan implements KejiwaanService {
             let payload_insert = {} as PayloadCreateKejiwaanQuestionVO;
 
             // If there is no secureId than create it
-            if (!payload.secureId) {
+            if (!payload.question.secureId) {
                 isUpdate = false;
                 payload_insert = {
                     id_group: Group.id,
                     secureId: uuidv4(),
-                    question: payload.question,
+                    question: payload.question.question,
                 };
 
                 Question = await this.kejiwaanModel.createQuestion(payload_insert);
@@ -98,13 +121,13 @@ class Kejiwaan implements KejiwaanService {
 
             } else {
                 isUpdate = true;
-                [FindQuestion] = await this.kejiwaanModel.findOne(payload.secureId);
+                [FindQuestion] = await this.kejiwaanModel.findOne(payload.question.secureId);
                 if (!FindQuestion) throw "Question Not Found";
 
                 payload_insert = {
                     id_group: Group.id,
-                    secureId: payload.secureId,
-                    question: payload.question,
+                    secureId: payload.question.secureId,
+                    question: payload.question.question,
                 }
 
                 Question = await this.kejiwaanModel.updateQuestion(payload_insert);
@@ -138,7 +161,22 @@ class Kejiwaan implements KejiwaanService {
             const Answer = await this.kejiwaanModel.createAnswer(PayloadAnswer)
             if (!Answer) throw "Create Answer Error";
 
-            return true
+            const Result: any = {
+                ...payload,
+                modeAdd: false,
+                loadingDelete: false,
+                question: { question: payload_insert.question, secureId: payload_insert.secureId },
+                answerList: [...PayloadAnswer.map(e => {
+                    return {
+                        secureId: e.secureId,
+                        answer: e.answer,
+                        value: e.value,
+                        symbol: e.symbol,
+                    }
+                })]
+            };
+
+            return Result;
         } catch (error) {
             throw error;
         }
