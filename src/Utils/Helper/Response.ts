@@ -8,7 +8,7 @@ const Responses = {
         });
     },
     badRequest: (res: Response, result: any, next: NextFunction): void => {
-        res.status(400).send({
+        res.status(200).send({
             message: "BAD_REQUEST",
             result
         });
