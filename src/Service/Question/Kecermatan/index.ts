@@ -108,6 +108,7 @@ class Kecermatan implements KecermatanService {
                     }
                 })
                 const ResultVO = {
+                    secureId: KecermatanDetail.secureId,
                     title: KecermatanDetail.title,
                     time: KecermatanDetail.time,
                     description: KecermatanDetail.description,

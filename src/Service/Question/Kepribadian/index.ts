@@ -73,6 +73,7 @@ class Kepribadian implements KepribadianService {
                 })
 
                 const ResultVO = {
+                    secureId: KepribadianDetail.secureId,
                     title: KepribadianDetail.title,
                     description: KepribadianDetail.description,
                     time: KepribadianDetail.time,
@@ -84,6 +85,7 @@ class Kepribadian implements KepribadianService {
                 return ResultVO;
             } else {
                 const ResultVO = {
+                    secureId: KepribadianDetail.secureId,
                     title: KepribadianDetail.title,
                     description: KepribadianDetail.description,
                     time: KepribadianDetail.time,

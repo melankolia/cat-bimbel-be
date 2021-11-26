@@ -73,6 +73,7 @@ class Kejiwaan implements KejiwaanService {
                 })
 
                 const ResultVO = {
+                    secureId: KejiwaanDetail.secureId,
                     title: KejiwaanDetail.title,
                     description: KejiwaanDetail.description,
                     time: KejiwaanDetail.time,
@@ -83,6 +84,7 @@ class Kejiwaan implements KejiwaanService {
                 return ResultVO;
             } else {
                 const ResultVO = {
+                    secureId: KejiwaanDetail.secureId,
                     title: KejiwaanDetail.title,
                     description: KejiwaanDetail.description,
                     time: KejiwaanDetail.time,
