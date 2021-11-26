@@ -55,6 +55,23 @@ class User {
         }
     }
 
+    public async userLogout(req: Request, res: Response, next: NextFunction): Promise<any> {
+        try {
+            if (!req.body?.username) throw "Username Required";
+        } catch (error) {
+            return Responses.badRequest(res, error, next);
+        }
+
+        try {
+            const payload = req.body?.username as string
+
+            const Result = await this.userService.userLogout(payload);
+            return Responses.success(res, Result)
+        } catch (error) {
+            return Responses.failed(res, error, next);
+        }
+    }
+
     public async registerUser(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
             if (!req.body?.username ||
@@ -76,6 +93,7 @@ class User {
             const Result = await this.userService.registerUser(payload);
             return Responses.success(res, Result);
         } catch (error) {
+            if (error == 'Username is Already Taken') return Responses.badRequest(res, error, next);
             return Responses.failed(res, error, next);
         }
 
@@ -111,6 +129,7 @@ class User {
 
             return Responses.success(res, Result);
         } catch (error) {
+            if (error == 'Username is Already Taken') return Responses.badRequest(res, error, next);
             return Responses.failed(res, error, next);
         }
     }
