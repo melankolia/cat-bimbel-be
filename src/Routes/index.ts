@@ -11,7 +11,7 @@ import Soal from "./Soal"
 const Routers: Router = express.Router();
 
 Routers.use("/users", User);
-Routers.use("/groups", AuthCheck.token, Group);
+Routers.use("/groups", AuthCheck.token, AuthCheck.isAdmin, Group);
 Routers.use("/questions", AuthCheck.token, Questions);
 Routers.use("/peraturan", AuthCheck.token, Peraturan);
 Routers.use("/soal", AuthCheck.token, Soal);
