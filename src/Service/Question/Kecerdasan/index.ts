@@ -73,6 +73,7 @@ class Kecerdasan implements KecerdasanService {
                 })
 
                 const ResultVO = {
+                    secureId: KecerdasanDetail.secureId,
                     title: KecerdasanDetail.title,
                     description: KecerdasanDetail.description,
                     time: KecerdasanDetail.time,
@@ -84,6 +85,7 @@ class Kecerdasan implements KecerdasanService {
             } else {
 
                 const ResultVO = {
+                    secureId: KecerdasanDetail.secureId,
                     title: KecerdasanDetail.title,
                     description: KecerdasanDetail.description,
                     time: KecerdasanDetail.time,

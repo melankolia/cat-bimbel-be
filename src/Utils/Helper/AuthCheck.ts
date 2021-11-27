@@ -24,6 +24,20 @@ const AuthCheck = {
         } catch (error) {
             return Responses.tokenError(res, error, next);
         }
+    },
+    isAdmin: (req: Request, res: Response, next: NextFunction): void => {
+        try {
+            const { authorization } = req.headers
+            const token = authorization?.split(" ")[1];
+
+            JWT.verify(token as string, process.env.SECRET_KEY as string, (err: any, decoded: any) => {
+                if (decoded.type != 'admin') throw "Unauthorized access"
+                else next()
+            });
+
+        } catch (error) {
+            return Responses.tokenError(res, error, next);
+        }
     }
 }
 

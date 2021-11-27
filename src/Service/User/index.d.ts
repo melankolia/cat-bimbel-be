@@ -2,6 +2,7 @@ import { PayloadUserVO, PayloadListUserVO, PayloadUserCreateVO } from "../../Typ
 
 export interface UserService {
     userLogin(PayloadUser: PayloadUserVO): Promise<any>
+    userLogout(PayloadUser: string): Promise<any>
     findAll(Payload: PayloadListUserVO): Promise<any>
     registerUser(Payload: PayloadUserCreateVO): Promise<any>
     createUser(Payload: PayloadUserCreateVO): Promise<any>

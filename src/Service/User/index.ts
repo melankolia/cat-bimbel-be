@@ -29,7 +29,7 @@ class User implements UserService {
             })
             if (!Status) throw "Error Update Status"
 
-            const token = JWT.sign({ username: User.username }, process.env.SECRET_KEY as string, { algorithm: 'HS256', expiresIn: '6h' });
+            const token = JWT.sign({ username: User.username, type: User.type }, process.env.SECRET_KEY as string, { algorithm: 'HS256', expiresIn: '6h' });
 
             const Response = {
                 secureId: User.secureId,
@@ -39,6 +39,20 @@ class User implements UserService {
                 token
             }
             return Response;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async userLogout(Username: string): Promise<any> {
+        try {
+            const Status = await this.userModel.updateStatusByUsername({
+                username: Username,
+                is_online: false
+            })
+            if (!Status) throw "Error Logout"
+
+            return true;
         } catch (error) {
             throw error;
         }

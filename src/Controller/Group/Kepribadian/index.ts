@@ -14,7 +14,6 @@ class Kepribadian {
     public async insertData(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
             if (!req.body?.title) throw "Title Required";
-            else if (!req.body?.description) throw "Description Required";
             else if (!req.body?.time) throw "Time Required";
             else if (!req.body?.type) throw "Type Required";
             else if (req.body?.is_active == null) throw "Bad Request";
@@ -28,7 +27,7 @@ class Kepribadian {
             const payload: PayloadCreateKepribadianVO = {
                 secureId: "",
                 title: req.body?.title,
-                description: req.body?.description,
+                description: req.body?.description || "",
                 time: req.body?.time,
                 is_active: req.body?.is_active,
                 type: req.body?.type,

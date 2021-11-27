@@ -1,5 +1,5 @@
 import Database from "../../Utils/Configs/db";
-import { PayloadListUserVO, PayloadUserCreateVO, PayloadUserStatusVO } from "../../Types";
+import { PayloadListUserVO, PayloadUserCreateVO, PayloadUserStatusVO, PayloadUserStatusUsernameVO } from "../../Types";
 import { UserModel } from "./index.d";
 
 class User implements UserModel {
@@ -84,6 +84,19 @@ class User implements UserModel {
 
         return new Promise((resolve, reject) => {
             Database.query(sql, [PayloadUser.is_online, PayloadUser.secureId], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
+    public updateStatusByUsername(PayloadUser: PayloadUserStatusUsernameVO): Promise<any> {
+        const sql = `update User set 
+                            is_online = ?
+                        where username = ?`;
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [PayloadUser.is_online, PayloadUser.username], (err: any, response: any) => {
                 if (!err) resolve(response)
                 else reject(err)
             })
