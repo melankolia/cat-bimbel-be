@@ -19,6 +19,7 @@ class Kecerdasan implements KecerdasanService {
             if (!KecerdasanDetail) throw "Group Not Found";
 
             const Kecerdasan = await this.kecerdasanModel.findAll(secureId);
+            console.log(Kecerdasan);
             if (!Kecerdasan) throw "Get Data Error";
             if (Kecerdasan.length != 0) {
                 let Result = [] as Array<{
@@ -27,6 +28,11 @@ class Kecerdasan implements KecerdasanService {
                     question: {
                         secureId: string;
                         question: string;
+                    };
+                    answer: {
+                        answer: null;
+                        symbol: null;
+                        value: null;
                     };
                     modeAdd: boolean;
                     loadingDelete: boolean;
@@ -48,6 +54,11 @@ class Kecerdasan implements KecerdasanService {
                             question: {
                                 secureId: e.question_secureId,
                                 question: e.question
+                            },
+                            answer: {
+                                answer: null,
+                                symbol: null,
+                                value: null,
                             },
                             modeAdd: false,
                             loadingDelete: false,
@@ -103,6 +114,7 @@ class Kecerdasan implements KecerdasanService {
     public async insertData(payload: PayloadRequestKecerdasanQuestionVO): Promise<any> {
         try {
             const [Group] = await this.kecerdasanGroupModel.findOne(payload.groupSecureId);
+            console.log(Group);
             if (!Group) throw "Group Not Found";
 
             let Question: any;
