@@ -208,3 +208,12 @@ export interface PayloadPeraturanCreateVO {
     description: string;
     rule_type: string;
 }
+
+export interface PayloadCreateNilaiVO {
+    secureId: string;
+    userSecureId: string;
+    type_nilai: string;
+    paket_soal: string;
+    nilai: number;
+    id_user: string;
+}

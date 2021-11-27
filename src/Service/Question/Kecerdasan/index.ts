@@ -30,6 +30,7 @@ class Kecerdasan implements KecerdasanService {
                         question: string;
                     };
                     answer: {
+                        secureId: null;
                         answer: null;
                         symbol: null;
                         value: null;
@@ -56,6 +57,7 @@ class Kecerdasan implements KecerdasanService {
                                 question: e.question
                             },
                             answer: {
+                                secureId: null,
                                 answer: null,
                                 symbol: null,
                                 value: null,
