@@ -5,6 +5,7 @@ const Routers: Router = express.Router();
 const Controller = new SoalController();
 
 Routers.get("/list", Controller.findAll.bind(Controller));
+Routers.get("/cover", Controller.findCover.bind(Controller));
 
 
 export default Routers;

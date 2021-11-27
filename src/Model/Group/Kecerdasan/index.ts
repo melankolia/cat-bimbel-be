@@ -55,9 +55,17 @@ class Kecerdasan implements KecerdasanModel {
     }
 
     public findOne(secureId: string): Promise<any> {
-        const sql = `SELECT * FROM 
-                            kecerdasan_group
-                            where secureId = ?`;
+        const sql = `SELECT 
+                        kg.secureId,
+                        title,
+                        description,
+                        time,
+                        is_active,
+                        count(id_group) as total_soal
+                        FROM kecerdasan_group kg
+                    left join kecerdasan_question kq on kg.id = kq.id_group
+                    where kg.secureId = ?
+                    group by kg.id`;
 
         return new Promise((resolve, reject) => {
             Database.query(sql, [secureId], (err: any, response: any) => {

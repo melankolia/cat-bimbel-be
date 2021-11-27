@@ -21,7 +21,7 @@ class User implements UserService {
             const [User] = await this.userModel.findByUsername(PayloadUser.username);
             if (!User) throw "User's Not Found";
 
-            if (!(User.password == PayloadUser.password)) throw "Password is Incorrect"
+            if (!(User.password == PayloadUser.password)) throw "Incorrect Password"
 
             const Status = await this.userModel.updateStatus({
                 secureId: User.secureId,
