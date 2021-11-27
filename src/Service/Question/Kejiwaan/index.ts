@@ -28,6 +28,12 @@ class Kejiwaan implements KejiwaanService {
                         secureId: string;
                         question: string;
                     };
+                    answer: {
+                        secureId: null;
+                        answer: null;
+                        symbol: null;
+                        value: null;
+                    };
                     modeAdd: boolean;
                     loadingDelete: boolean;
                     answerList: Array<{
@@ -48,6 +54,12 @@ class Kejiwaan implements KejiwaanService {
                             question: {
                                 secureId: e.question_secureId,
                                 question: e.question
+                            },
+                            answer: {
+                                secureId: null,
+                                answer: null,
+                                symbol: null,
+                                value: null,
                             },
                             modeAdd: false,
                             loadingDelete: false,
