@@ -55,9 +55,19 @@ class Kecermatan implements KecermatanModel {
     }
 
     public findOne(secureId: string): Promise<any> {
-        const sql = `SELECT * FROM 
-                            kecermatan_group
-                            where secureId = ?`;
+        const sql = `SELECT 
+                        kg.secureId,
+                        kg.title,
+                        kg.description,
+                        kg.time,
+                        count(kq.id) as total_soal,
+                        count(DISTINCT ks.id) as total_section,
+                        kg.is_active
+                        FROM kecermatan_group kg
+                    left join kecermatan_section ks on kg.id = ks.id_group
+                    left join kecermatan_question kq on ks.id = kq.id_section
+                    where kg.secureId = ?
+                    group by kg.id`;
 
         return new Promise((resolve, reject) => {
             Database.query(sql, [secureId], (err: any, response: any) => {

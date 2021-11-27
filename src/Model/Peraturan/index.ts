@@ -30,6 +30,21 @@ class Peraturan implements PeraturanModel {
         });
     }
 
+    public findByType(type: string): Promise<any> {
+        const sql = `SELECT secureId,
+                            type,
+                            description
+                            FROM peraturan 
+                            where rule_type = ?`;
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [type], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
     public createData(payload: PayloadPeraturanCreateVO): Promise<any> {
         const sql = `INSERT INTO peraturan SET ?`;
 

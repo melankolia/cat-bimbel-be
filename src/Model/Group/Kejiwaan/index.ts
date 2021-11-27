@@ -55,9 +55,17 @@ class Kejiwaan implements KejiwaanModel {
     }
 
     public findOne(secureId: string): Promise<any> {
-        const sql = `SELECT * FROM 
-                            kejiwaan_group
-                            where secureId = ?`;
+        const sql = `SELECT 
+                        kg.secureId,
+                        title,
+                        description,
+                        time,
+                        is_active,
+                        count(id_group) as total_soal
+                        FROM kejiwaan_group kg
+                    left join kejiwaan_question kq on kg.id = kq.id_group
+                    where kg.secureId = ?
+                    group by kg.id;`;
 
         return new Promise((resolve, reject) => {
             Database.query(sql, [secureId], (err: any, response: any) => {
