@@ -57,6 +57,7 @@ class Kepribadian implements KepribadianModel {
 
     public findOne(secureId: string): Promise<any> {
         const sql = `SELECT 
+                        kg.id,
                         kg.secureId,
                         title,
                         description,

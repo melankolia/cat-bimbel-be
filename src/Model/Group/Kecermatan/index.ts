@@ -56,6 +56,7 @@ class Kecermatan implements KecermatanModel {
 
     public findOne(secureId: string): Promise<any> {
         const sql = `SELECT 
+                        kg.id,
                         kg.secureId,
                         kg.title,
                         kg.description,
