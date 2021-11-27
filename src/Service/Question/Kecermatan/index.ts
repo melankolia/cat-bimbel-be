@@ -119,6 +119,7 @@ class Kecermatan implements KecermatanService {
                 return ResultVO;
             } else {
                 const ResultVO = {
+                    secureId: KecermatanDetail.secureId,
                     title: KecermatanDetail.title,
                     time: KecermatanDetail.time,
                     description: KecermatanDetail.description,
