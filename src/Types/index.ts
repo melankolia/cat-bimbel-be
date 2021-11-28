@@ -217,3 +217,15 @@ export interface PayloadCreateNilaiVO {
     nilai: number;
     id_user: string;
 }
+
+export interface PayloadCreateNilaiKecermatanVO {
+    secureId: string;
+    id_user: string;
+    userSecureId: string;
+    paket_soal: string;
+    section: string;
+    benar: number;
+    salah: number;
+    salary: number;
+    total: number;
+}

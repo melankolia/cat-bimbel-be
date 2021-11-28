@@ -41,6 +41,12 @@ class Kecermatan implements KecermatanService {
                         modeAdd: boolean;
                         loadingSubmit: boolean;
                         loadingDelete: boolean;
+                        answer: {
+                            secureId: null;
+                            answer: null;
+                            symbol: null;
+                            value: null;
+                        };
                         answerList: Array<{
                             secureId: string;
                             symbol: string;
@@ -70,6 +76,12 @@ class Kecermatan implements KecermatanService {
                                     modeAdd: false,
                                     loadingSubmit: false,
                                     loadingDelete: false,
+                                    answer: {
+                                        secureId: null,
+                                        answer: null,
+                                        symbol: null,
+                                        value: null,
+                                    },
                                     answerList: [
                                         {
                                             secureId: e.answer_secureId,
@@ -89,6 +101,12 @@ class Kecermatan implements KecermatanService {
                                 modeAdd: false,
                                 loadingSubmit: false,
                                 loadingDelete: false,
+                                answer: {
+                                    secureId: null,
+                                    answer: null,
+                                    symbol: null,
+                                    value: null,
+                                },
                                 answerList: [
                                     {
                                         secureId: e.answer_secureId,
