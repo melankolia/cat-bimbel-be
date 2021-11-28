@@ -20,7 +20,8 @@ class User implements UserModel {
     }
 
     public findBySecureId(secureId: string): Promise<any> {
-        const sql = `SELECT secureId,
+        const sql = `SELECT id,
+                            secureId,
                             username,
                             nama_lengkap,
                             password,
