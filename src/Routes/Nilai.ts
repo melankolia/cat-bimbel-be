@@ -5,6 +5,7 @@ const Routers: Router = express.Router();
 const Controller = new NilaiController();
 
 Routers.get("/", Controller.findAll.bind(Controller));
+Routers.get("/kecermatan", Controller.findAllKecermatan.bind(Controller));
 Routers.post("/", Controller.insertData.bind(Controller));
 
 export default Routers;

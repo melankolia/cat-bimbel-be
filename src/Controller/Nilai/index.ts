@@ -51,6 +51,23 @@ class Nilai {
             return Responses.failed(res, error, next);
         }
     }
+
+    public async findAllKecermatan(req: Request, res: Response, next: NextFunction): Promise<any> {
+        try {
+            if (!req.query?.secureId) throw "SecureId Required";
+        } catch (error) {
+            return Responses.badRequest(res, error, next);
+        }
+
+        try {
+            const secureId = req.query?.secureId as string;
+
+            const Result = await this.nilaiService.findAllKecermatan(secureId);
+            return Responses.success(res, Result);
+        } catch (error) {
+            return Responses.failed(res, error, next);
+        }
+    }
 }
 
 export default Nilai;

@@ -36,6 +36,24 @@ class Nilai implements NilaiModel {
             })
         })
     }
+
+    public findAllKecermatan(secureId: string): Promise<any> {
+        const sql = `select 	secureId,
+                                GROUP_CONCAT(DISTINCT paket_soal) as paket_soal,
+                                group_concat(section) as section,
+                                group_concat(benar) as benar,
+                                GROUP_CONCAT(salah) as salah
+                        from daftar_nilai_kecermatan
+                        where id_user = (select id from User where secureId = ?)
+                        group by secureId;`
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, [secureId], (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
 }
 
 export default Nilai;
