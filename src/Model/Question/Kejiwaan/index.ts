@@ -98,7 +98,6 @@ class Kejiwaan implements KejiwaanModel {
     }
 
     public deleteAnswer(payload: Array<{ secureId: string }>): Promise<any> {
-        // console.log([payload.map(e => e?.secureId)]);
         const sql = `delete from kejiwaan_answer where secureId in ?`;
 
         return new Promise((resolve, reject) => {

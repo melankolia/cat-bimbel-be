@@ -68,6 +68,27 @@ class Nilai {
             return Responses.failed(res, error, next);
         }
     }
+
+    public async insertDataKecermatan(req: Request, res: Response, next: NextFunction): Promise<any> {
+        try {
+            if (!req.body?.secureId) throw "SecureId Required";
+            else if (!req.body?.kecermatanVO || req.body.kecermatanVO.length == 0) throw "kecermatanVO required"
+        } catch (error) {
+            return Responses.badRequest(res, error, next);
+        }
+
+        try {
+            const Payload = {
+                secureId: req.body.secureId,
+                kecermatanVO: [...req.body.kecermatanVO]
+            };
+
+            const Result = await this.nilaiService.insertDataKecermatan(Payload.secureId, Payload.kecermatanVO);
+            return Responses.success(res, Result);
+        } catch (error) {
+            return Responses.failed(res, error, next);
+        }
+    }
 }
 
 export default Nilai;

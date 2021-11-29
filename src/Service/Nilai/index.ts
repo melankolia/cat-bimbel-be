@@ -1,6 +1,6 @@
 import NilaiModel from "../../Model/Nilai";
 import UserModel from "../../Model/User";
-import { PayloadCreateNilaiVO } from "../../Types";
+import { PayloadCreateNilaiKecermatanVO, PayloadCreateNilaiVO } from "../../Types";
 import { NilaiService } from "./index.d";
 import { v4 as uuidv4 } from "uuid";
 
@@ -56,20 +56,41 @@ class Nilai implements NilaiService {
                 Kecermatan.map((e: any) => {
                     e.benar = e?.benar.length != 0 ? e.benar?.split(",") : 0;
                     e.salah = e?.salah.length != 0 ? e.salah?.split(",") : 0;
+                    e.total = e?.total.length != 0 ? e.total?.split(",") : 0;
                     Result.push({
                         secureId: e.secureId,
                         paket_soal: e.paket_soal,
-                        grandTotal: e.benar?.reduce((e: any, c: any) => +e + +c) / e.benar.length,
+                        grandTotal: e.total?.reduce((e: any, c: any) => +e + +c) / e.total.length,
                         section: e?.section?.split(",")?.map((e2: any, i: any) => ({
                             title: e2,
                             benar: e.benar[i] ? +e.benar[i] : 0,
                             salah: e.salah[i] ? +e.salah[i] : 0,
+                            total: e.total[i] ? +e.total[i] : 0
                         }))
                     })
                 })
             } else return Kecermatan
 
             return Result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async insertDataKecermatan(secureId: string, payload: Array<PayloadCreateNilaiKecermatanVO>): Promise<any> {
+        try {
+            const [User] = await this.userModel.findBySecureId(secureId)
+            if (!User) throw "Sorry, User Not Found";
+
+            const uid: any = uuidv4()
+            payload.map((e: PayloadCreateNilaiKecermatanVO) => {
+                e.secureId = uid;
+                e.id_user = User.id;
+            });
+
+            const Result = await this.nilaiModel.insertDataKecermatan(payload);
+
+            return true;
         } catch (error) {
             throw error;
         }
