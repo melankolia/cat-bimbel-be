@@ -12,7 +12,7 @@ class Nilai implements NilaiModel {
                         from daftar_nilai
                         where id_user = 
                             (select id 
-                                from user 
+                                from User 
                                 where secureId = ?) 
                         AND type_nilai = ?
                         ORDER BY createdDate DESC`;
