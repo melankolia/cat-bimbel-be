@@ -27,7 +27,7 @@ class User implements UserModel {
                             password,
                             type
                             FROM 
-                            User where secureId = ? order by is_online DESC`;
+                            User where secureId = ?`;
 
         return new Promise((resolve, reject) => {
             Database.query(sql, [secureId], (err: any, response: any) => {
@@ -44,7 +44,7 @@ class User implements UserModel {
                             nama_lengkap,
                             is_online
                             FROM
-                            User where username LIKE ?`
+                            User where username LIKE ? order by is_online DESC`
         return new Promise((resolve, reject) => {
             Database.query(sql, [payload.search], (err: any, response: any) => {
                 if (!err) resolve(response)
