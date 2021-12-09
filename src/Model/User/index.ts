@@ -27,7 +27,7 @@ class User implements UserModel {
                             password,
                             type
                             FROM 
-                            User where secureId = ?`;
+                            User where secureId = ? order by is_online DESC`;
 
         return new Promise((resolve, reject) => {
             Database.query(sql, [secureId], (err: any, response: any) => {
