@@ -56,10 +56,15 @@ class Kecermatan implements KecermatanService {
                 }>
 
                 Kecermatan.map((e: any, i: any) => {
-                    const lastSectionIndex = Result.length - 1;
-                    const lastQuestionIndex = Result[lastSectionIndex]?.question.length - 1
                     const pointer = i == 0 ? 0 : Result.length;
-                    if (i == 0 || e.section_secureId != Result[lastSectionIndex]?.secureId) {
+                    const findIndexSection = Result.findIndex((e2: any) => e2.secureId == e.section_secureId);
+                    const lastSectionIndex = Result.length - 1;
+
+                    let lastQuestionIndex: number;
+                    if (findIndexSection != -1) lastQuestionIndex = Result[findIndexSection]?.question.length - 1;
+                    else lastQuestionIndex = Result[lastSectionIndex]?.question.length - 1;
+
+                    if (i == 0 || findIndexSection == -1) {
                         Result[pointer] = {
                             secureId: e.section_secureId,
                             title: e.title,
@@ -93,9 +98,9 @@ class Kecermatan implements KecermatanService {
                             ]
                         }
                     }
-                    else if (e.section_secureId == Result[lastSectionIndex]?.secureId) {
-                        if (e.question_secureId != Result[lastSectionIndex].question[lastQuestionIndex]?.secureId) {
-                            Result[lastSectionIndex].question.push({
+                    else if (findIndexSection != -1) {
+                        if (e.question_secureId != Result[findIndexSection].question[lastQuestionIndex]?.secureId) {
+                            Result[findIndexSection].question.push({
                                 secureId: e.question_secureId,
                                 title: e?.question?.split(", "),
                                 modeAdd: false,
@@ -116,8 +121,8 @@ class Kecermatan implements KecermatanService {
                                 ]
                             })
                         }
-                        else if (e.question_secureId == Result[lastSectionIndex].question[lastQuestionIndex]?.secureId) {
-                            Result[lastSectionIndex].question[lastQuestionIndex].answerList.push({
+                        else if (e.question_secureId == Result[findIndexSection].question[lastQuestionIndex]?.secureId) {
+                            Result[findIndexSection].question[lastQuestionIndex].answerList.push({
                                 secureId: e.answer_secureId,
                                 symbol: e.symbol,
                                 value: e.value
