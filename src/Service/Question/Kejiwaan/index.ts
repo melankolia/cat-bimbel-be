@@ -2,6 +2,7 @@ import KejiwaanModel from "../../../Model/Question/Kejiwaan";
 import KejiwaanGroupModel from "../../../Model/Group/Kejiwaan";
 import { PayloadCreateKejiwaanAnswerVO, PayloadCreateKejiwaanQuestionVO, PayloadRequestKejiwaanQuestionVO } from "../../../Types";
 import { KejiwaanService } from "./index.d";
+import useFullFunction from "../../../Utils/Helper/UsefullFunction";
 import { v4 as uuidv4 } from "uuid";
 
 class Kejiwaan implements KejiwaanService {
@@ -84,12 +85,15 @@ class Kejiwaan implements KejiwaanService {
                     }
                 })
 
+                if (KejiwaanDetail.is_random) Result = [...useFullFunction.randomizedArr(Result)]
+
                 const ResultVO = {
                     secureId: KejiwaanDetail.secureId,
                     title: KejiwaanDetail.title,
                     description: KejiwaanDetail.description,
                     time: KejiwaanDetail.time,
                     is_active: KejiwaanDetail.is_active,
+                    is_random: KejiwaanDetail.is_random,
                     result: [...Result]
                 }
 
@@ -101,6 +105,7 @@ class Kejiwaan implements KejiwaanService {
                     description: KejiwaanDetail.description,
                     time: KejiwaanDetail.time,
                     is_active: KejiwaanDetail.is_active,
+                    is_random: KejiwaanDetail.is_random,
                     result: [...Kejiwaan]
                 }
 

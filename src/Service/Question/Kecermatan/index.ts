@@ -7,6 +7,7 @@ import {
     PayloadCreateKecermatanSectionVO,
     PayloadCreateKecermatanAnswerVO
 } from "../../../Types"
+import useFullFunction from "../../../Utils/Helper/UsefullFunction";
 import { v4 as uuidv4 } from "uuid";
 class Kecermatan implements KecermatanService {
     kecermatanModel: KecermatanModel;
@@ -130,12 +131,16 @@ class Kecermatan implements KecermatanService {
                         }
                     }
                 })
+
+                if (KecermatanDetail.is_random) Result.map(e => { e.question = [...useFullFunction.randomizedArr(e.question)] })
+
                 const ResultVO = {
                     secureId: KecermatanDetail.secureId,
                     title: KecermatanDetail.title,
                     time: KecermatanDetail.time,
                     description: KecermatanDetail.description,
                     is_active: KecermatanDetail.is_active,
+                    is_random: KecermatanDetail.is_random,
                     result: [...Result]
                 }
 
@@ -147,6 +152,7 @@ class Kecermatan implements KecermatanService {
                     time: KecermatanDetail.time,
                     description: KecermatanDetail.description,
                     is_active: KecermatanDetail.is_active,
+                    is_random: KecermatanDetail.is_random,
                     result: [...Kecermatan]
                 }
 

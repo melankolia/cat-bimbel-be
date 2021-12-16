@@ -30,6 +30,7 @@ class Kepribadian {
                 description: req.body?.description || "",
                 time: req.body?.time,
                 is_active: req.body?.is_active,
+                is_random: req.body?.is_random,
                 type: req.body?.type,
             }
 

@@ -19,11 +19,12 @@ class Kepribadian implements KepribadianModel {
                             title = ?,
                             description = ?,
                             time = ?,
-                            type = ?
+                            type = ?,
+                            is_random = ?
                             where secureId = ?`;
 
         return new Promise((resolve, reject) => {
-            Database.query(sql, [payload.title, payload.description, payload.time, payload.type, payload.secureId], (err: any, response: any) => {
+            Database.query(sql, [payload.title, payload.description, payload.time, payload.type, payload.is_random, payload.secureId], (err: any, response: any) => {
                 if (!err) resolve(response)
                 else reject(err)
             })
@@ -63,6 +64,7 @@ class Kepribadian implements KepribadianModel {
                         description,
                         time,
                         is_active,
+                        is_random,
                         count(id_group) as total_soal,
                         type
                         FROM kepribadian_group kg
@@ -85,6 +87,7 @@ class Kepribadian implements KepribadianModel {
                         description,
                         time,
                         is_active,
+                        is_random,
                         count(id_group) as total_soal,
                         type
                         FROM kepribadian_group kg

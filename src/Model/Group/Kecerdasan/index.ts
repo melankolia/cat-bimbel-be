@@ -18,11 +18,12 @@ class Kecerdasan implements KecerdasanModel {
         const sql = `update kecerdasan_group set
                             title = ?,
                             description = ?,
-                            time = ?
+                            time = ?,
+                            is_random = ?
                             where secureId = ?`;
 
         return new Promise((resolve, reject) => {
-            Database.query(sql, [payload.title, payload.description, payload.time, payload.secureId], (err: any, response: any) => {
+            Database.query(sql, [payload.title, payload.description, payload.time, payload.is_random, payload.secureId], (err: any, response: any) => {
                 if (!err) resolve(response)
                 else reject(err)
             })
@@ -62,6 +63,7 @@ class Kecerdasan implements KecerdasanModel {
                         description,
                         time,
                         is_active,
+                        is_random,
                         count(id_group) as total_soal
                         FROM kecerdasan_group kg
                     left join kecerdasan_question kq on kg.id = kq.id_group
@@ -83,6 +85,7 @@ class Kecerdasan implements KecerdasanModel {
                         description,
                         time,
                         is_active,
+                        is_random,
                         count(id_group) as total_soal
                         FROM kecerdasan_group kg
                     left join kecerdasan_question kq on kg.id = kq.id_group
