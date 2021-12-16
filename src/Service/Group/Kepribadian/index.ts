@@ -57,9 +57,9 @@ class Kepribadian implements KepribadianService {
         }
     }
 
-    public async findAll(): Promise<any> {
+    public async findAll(search: string = ""): Promise<any> {
         try {
-            const Kepribadian = await this.kepribadianModel.findAll();
+            const Kepribadian = await this.kepribadianModel.findAll(search);
             if (!Kepribadian) throw "Get Data Error";
 
             Kepribadian.map((e: any) => {

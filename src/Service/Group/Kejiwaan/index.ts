@@ -57,9 +57,9 @@ class Kejiwaan implements KejiwaanService {
         }
     }
 
-    public async findAll(): Promise<any> {
+    public async findAll(search: string = ""): Promise<any> {
         try {
-            const Kejiwaan = await this.kejiwaanModel.findAll();
+            const Kejiwaan = await this.kejiwaanModel.findAll(search);
             if (!Kejiwaan) throw "Get Data Error";
 
             Kejiwaan.map((e: any) => {

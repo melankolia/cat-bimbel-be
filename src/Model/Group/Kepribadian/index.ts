@@ -80,7 +80,7 @@ class Kepribadian implements KepribadianModel {
         });
     }
 
-    public findAll(): Promise<any> {
+    public findAll(search: string): Promise<any> {
         const sql = `SELECT 
                         kg.secureId,
                         title,
@@ -92,6 +92,7 @@ class Kepribadian implements KepribadianModel {
                         type
                         FROM kepribadian_group kg
                     left join kepribadian_question kq on kg.id = kq.id_group
+                    where title LIKE '%${search}%'
                     group by kg.id;`;
 
         return new Promise((resolve, reject) => {

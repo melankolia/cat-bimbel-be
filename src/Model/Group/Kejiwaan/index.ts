@@ -78,7 +78,7 @@ class Kejiwaan implements KejiwaanModel {
         });
     }
 
-    public findAll(): Promise<any> {
+    public findAll(search: string): Promise<any> {
         const sql = `SELECT 
                         kg.secureId,
                         title,
@@ -89,6 +89,7 @@ class Kejiwaan implements KejiwaanModel {
                         count(id_group) as total_soal
                         FROM kejiwaan_group kg
                     left join kejiwaan_question kq on kg.id = kq.id_group
+                    where title LIKE '%${search}%'
                     group by kg.id;`;
 
         return new Promise((resolve, reject) => {

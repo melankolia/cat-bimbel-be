@@ -69,7 +69,9 @@ class Kecerdasan {
 
     public async findAll(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
-            const Result = await this.kecerdasanService.findAll();
+            const search = req.query?.search as string;
+
+            const Result = await this.kecerdasanService.findAll(search);
             return Responses.success(res, Result);
         } catch (error) {
             return Responses.failed(res, error, next);

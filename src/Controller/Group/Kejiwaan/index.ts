@@ -69,7 +69,9 @@ class Kejiwaan {
 
     public async findAll(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
-            const Result = await this.kejiwaanService.findAll();
+            const search = req.query?.search as string;
+
+            const Result = await this.kejiwaanService.findAll(search);
             return Responses.success(res, Result);
         } catch (error) {
             return Responses.failed(res, error, next);

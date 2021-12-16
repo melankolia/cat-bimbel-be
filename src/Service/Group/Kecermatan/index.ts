@@ -57,9 +57,9 @@ class Kecermatan implements KecermatanService {
         }
     }
 
-    public async findAll(): Promise<any> {
+    public async findAll(search: string = ""): Promise<any> {
         try {
-            const Kecermatan = await this.kecermatanModel.findAll();
+            const Kecermatan = await this.kecermatanModel.findAll(search);
             if (!Kecermatan) throw "Get Data Error";
 
             Kecermatan.map((e: any) => {

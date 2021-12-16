@@ -80,7 +80,7 @@ class Kecermatan implements KecermatanModel {
         });
     }
 
-    public findAll(): Promise<any> {
+    public findAll(search: string): Promise<any> {
         const sql = `SELECT 
                         kg.secureId,
                         kg.title,
@@ -93,6 +93,7 @@ class Kecermatan implements KecermatanModel {
                         FROM kecermatan_group kg
                     left join kecermatan_section ks on kg.id = ks.id_group
                     left join kecermatan_question kq on ks.id = kq.id_section
+                    where kg.title LIKE '%${search}%'
                     group by kg.id`;
 
         return new Promise((resolve, reject) => {
