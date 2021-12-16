@@ -41,12 +41,15 @@ export interface PayloadRequestKecerdasanQuestionVO {
     question: {
         secureId: string;
         question: string;
+        type: string;
     };
     answerList: Array<{
         secureId: string;
         answer: string;
         value: number;
         symbol: string;
+        type: string;
+
     }>
 }
 
@@ -56,12 +59,14 @@ export interface PayloadCreateKecerdasanAnswerVO {
     answer: string;
     value: number;
     symbol: string;
+    type: string;
 }
 
 export interface PayloadCreateKecerdasanQuestionVO {
     id_group: string | null;
     secureId: string;
     question: string;
+    type: string;
 }
 
 // Init: string;

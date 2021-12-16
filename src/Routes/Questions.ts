@@ -15,6 +15,8 @@ const Kecermatan = new KecermatanController();
 Routers.get("/kecerdasan", Kecerdasan.findAll.bind(Kecerdasan));
 Routers.post("/kecerdasan", AuthCheck.isAdmin, Kecerdasan.insertData.bind(Kecerdasan));
 Routers.delete("/kecerdasan", AuthCheck.isAdmin, Kecerdasan.deleteQuestion.bind(Kecerdasan));
+Routers.post("/kecerdasan/upload", AuthCheck.isAdmin, Kecerdasan.uploadPhotos.bind(Kecerdasan));
+Routers.delete("/kecerdasan/delete-photo", AuthCheck.isAdmin, Kecerdasan.deletePhotos.bind(Kecerdasan));
 
 Routers.get("/kepribadian", Kepribadian.findAll.bind(Kepribadian));
 Routers.post("/kepribadian", AuthCheck.isAdmin, Kepribadian.insertData.bind(Kepribadian));
