@@ -3,6 +3,8 @@ import KecerdasanGroupModel from "../../../Model/Group/Kecerdasan";
 import { PayloadCreateKecerdasanAnswerVO, PayloadCreateKecerdasanQuestionVO, PayloadRequestKecerdasanQuestionVO } from "../../../Types";
 import { KecerdasanService } from "./index.d";
 import { v4 as uuidv4 } from "uuid";
+import path from "path";
+import fs from "fs";
 
 class Kecerdasan implements KecerdasanService {
     kecerdasanModel: KecerdasanModel;
@@ -19,7 +21,6 @@ class Kecerdasan implements KecerdasanService {
             if (!KecerdasanDetail) throw "Group Not Found";
 
             const Kecerdasan = await this.kecerdasanModel.findAll(secureId);
-            console.log(Kecerdasan);
             if (!Kecerdasan) throw "Get Data Error";
             if (Kecerdasan.length != 0) {
                 let Result = [] as Array<{
@@ -28,12 +29,14 @@ class Kecerdasan implements KecerdasanService {
                     question: {
                         secureId: string;
                         question: string;
+                        type: string;
                     };
                     answer: {
                         secureId: null;
                         answer: null;
                         symbol: null;
                         value: null;
+                        type: null;
                     };
                     modeAdd: boolean;
                     loadingDelete: boolean;
@@ -42,6 +45,7 @@ class Kecerdasan implements KecerdasanService {
                         answer: string;
                         value: number;
                         symbol: string;
+                        type: string;
                     }>
                 }>;
 
@@ -54,13 +58,15 @@ class Kecerdasan implements KecerdasanService {
                             sessionTime: e.session_time,
                             question: {
                                 secureId: e.question_secureId,
-                                question: e.question
+                                question: e.question,
+                                type: e.question_type
                             },
                             answer: {
                                 secureId: null,
                                 answer: null,
                                 symbol: null,
                                 value: null,
+                                type: null,
                             },
                             modeAdd: false,
                             loadingDelete: false,
@@ -69,7 +75,8 @@ class Kecerdasan implements KecerdasanService {
                                     secureId: e.answer_secureId,
                                     symbol: e.symbol,
                                     answer: e.answer,
-                                    value: e.value
+                                    value: e.value,
+                                    type: e.type
                                 }
                             ]
                         }
@@ -80,7 +87,8 @@ class Kecerdasan implements KecerdasanService {
                             secureId: e.answer_secureId,
                             symbol: e.symbol,
                             answer: e.answer,
-                            value: e.value
+                            value: e.value,
+                            type: e.type
                         })
                     }
                 })
@@ -116,7 +124,6 @@ class Kecerdasan implements KecerdasanService {
     public async insertData(payload: PayloadRequestKecerdasanQuestionVO): Promise<any> {
         try {
             const [Group] = await this.kecerdasanGroupModel.findOne(payload.groupSecureId);
-            console.log(Group);
             if (!Group) throw "Group Not Found";
 
             let Question: any;
@@ -131,6 +138,7 @@ class Kecerdasan implements KecerdasanService {
                     id_group: Group.id,
                     secureId: uuidv4(),
                     question: payload.question.question,
+                    type: payload.question.type
                 };
 
                 Question = await this.kecerdasanModel.createQuestion(payload_insert);
@@ -145,6 +153,7 @@ class Kecerdasan implements KecerdasanService {
                     id_group: Group.id,
                     secureId: payload.question.secureId,
                     question: payload.question.question,
+                    type: payload.question.type,
                 }
 
                 Question = await this.kecerdasanModel.updateQuestion(payload_insert);
@@ -172,6 +181,7 @@ class Kecerdasan implements KecerdasanService {
                     answer: e.answer,
                     value: e.value,
                     symbol: e.symbol,
+                    type: e.type
                 })
             });
 
@@ -182,13 +192,14 @@ class Kecerdasan implements KecerdasanService {
                 ...payload,
                 modeAdd: false,
                 loadingDelete: false,
-                question: { question: payload_insert.question, secureId: payload_insert.secureId },
+                question: { question: payload_insert.question, secureId: payload_insert.secureId, type: payload_insert.type },
                 answerList: [...PayloadAnswer.map(e => {
                     return {
                         secureId: e.secureId,
                         answer: e.answer,
                         value: e.value,
                         symbol: e.symbol,
+                        type: e.type
                     }
                 })]
             };
@@ -199,11 +210,20 @@ class Kecerdasan implements KecerdasanService {
         }
     }
 
-    public async deleteQuestion(secureId: string): Promise<any> {
+    public async deleteQuestion(groupSecureId: string, secureId: string, pertanyaanNo: string): Promise<any> {
         try {
             const Question = await this.kecerdasanModel.deleteQuestion(secureId);
             if (!Question) throw "Delete Data Error";
 
+            const pathUri = path.join(
+                'src',
+                'static-img',
+                'images',
+                groupSecureId as string,
+                pertanyaanNo as string,
+            )
+            console.log(pathUri);
+            fs.rmSync(pathUri, { recursive: true, force: true });
             return true;
         } catch (error) {
             throw error;

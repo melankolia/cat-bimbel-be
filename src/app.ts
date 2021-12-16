@@ -31,6 +31,9 @@ app.use(express.urlencoded({ extended: false }));
 // Init Cross Server Scripting
 app.use(helmet.xssFilter());
 
+app.use("/", express.static(path.join(__dirname, "static-img")));
+
+
 // Init Router
 app.use("/", Router);
 
