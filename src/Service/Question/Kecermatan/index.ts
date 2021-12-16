@@ -18,7 +18,7 @@ class Kecermatan implements KecermatanService {
         this.kecermatanGroupModel = new KecermatanGroupModel();
     }
 
-    public async findAll(secureId: string): Promise<any> {
+    public async findAll(secureId: string, type: string): Promise<any> {
         try {
             const [KecermatanDetail] = await this.kecermatanGroupModel.findOne(secureId);
             if (!KecermatanDetail) throw "Group Not Found";
@@ -132,7 +132,7 @@ class Kecermatan implements KecermatanService {
                     }
                 })
 
-                if (KecermatanDetail.is_random) Result.map(e => { e.question = [...useFullFunction.randomizedArr(e.question)] })
+                if (KecermatanDetail.is_random && type !== 'admin') Result.map(e => { e.question = [...useFullFunction.randomizedArr(e.question)] })
 
                 const ResultVO = {
                     secureId: KecermatanDetail.secureId,

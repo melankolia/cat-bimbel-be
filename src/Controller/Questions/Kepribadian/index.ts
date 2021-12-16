@@ -20,8 +20,9 @@ class Kepribadian {
 
         try {
             const secureId = req.query?.secureId as string;
+            const type = req.query?.type as string;
 
-            const Result = await this.kepribadianService.findAll(secureId);
+            const Result = await this.kepribadianService.findAll(secureId, type);
             return Responses.success(res, Result);
         } catch (error) {
             return Responses.failed(res, error, next);

@@ -235,6 +235,6 @@ export interface PayloadCreateNilaiKecermatanVO {
     section: string;
     benar: number;
     salah: number;
-    salary: number;
+    tidak_dijawab: number;
     total: number;
 }

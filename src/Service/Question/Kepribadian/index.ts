@@ -14,7 +14,7 @@ class Kepribadian implements KepribadianService {
         this.kepribadianGroupModel = new KepribadianGroupModel();
     }
 
-    public async findAll(secureId: string): Promise<any> {
+    public async findAll(secureId: string, type: string): Promise<any> {
         try {
             const [KepribadianDetail] = await this.kepribadianGroupModel.findOne(secureId);
             if (!KepribadianDetail) throw "Group Not Found";
@@ -85,7 +85,7 @@ class Kepribadian implements KepribadianService {
                     }
                 })
 
-                if (KepribadianDetail.is_random) Result = [...useFullFunction.randomizedArr(Result)]
+                if (KepribadianDetail.is_random && type !== 'admin') Result = [...useFullFunction.randomizedArr(Result)]
 
                 const ResultVO = {
                     secureId: KepribadianDetail.secureId,

@@ -44,6 +44,7 @@ class Nilai implements NilaiModel {
                                 group_concat(section) as section,
                                 group_concat(benar) as benar,
                                 GROUP_CONCAT(salah) as salah,
+                                GROUP_CONCAT(tidak_dijawab) as tidak_dijawab,
                                 group_concat(total) as total,
                                 GROUP_CONCAT(DISTINCT createdDate) as createdDate
                         from daftar_nilai_kecermatan
@@ -62,11 +63,11 @@ class Nilai implements NilaiModel {
     public insertDataKecermatan(payload: Array<PayloadCreateNilaiKecermatanVO>): Promise<any> {
         const sql = `insert into 
                             daftar_nilai_kecermatan 
-                            (secureId, paket_soal, section, benar, salah, total, id_user, createdDate) 
+                            (secureId, paket_soal, section, benar, salah, tidak_dijawab, total, id_user, createdDate) 
                             values ?`
 
         return new Promise((resolve, reject) => {
-            Database.query(sql, [payload.map(e => [e.secureId, e.paket_soal, e.section, e.benar, e.salah, e.total, e.id_user, new Date()])], (err: any, response: any) => {
+            Database.query(sql, [payload.map(e => [e.secureId, e.paket_soal, e.section, e.benar, e.salah, e.tidak_dijawab, e.total, e.id_user, new Date()])], (err: any, response: any) => {
                 if (!err) resolve(response)
                 else reject(err)
             })

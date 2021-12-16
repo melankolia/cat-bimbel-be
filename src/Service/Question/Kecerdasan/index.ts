@@ -16,7 +16,7 @@ class Kecerdasan implements KecerdasanService {
         this.kecerdasanGroupModel = new KecerdasanGroupModel();
     }
 
-    public async findAll(secureId: string): Promise<any> {
+    public async findAll(secureId: string, type: string): Promise<any> {
         try {
             const [KecerdasanDetail] = await this.kecerdasanGroupModel.findOne(secureId);
             if (!KecerdasanDetail) throw "Group Not Found";
@@ -94,7 +94,7 @@ class Kecerdasan implements KecerdasanService {
                     }
                 })
 
-                if (KecerdasanDetail.is_random) Result = [...useFullFunction.randomizedArr(Result)]
+                if (KecerdasanDetail.is_random && type !== 'admin') Result = [...useFullFunction.randomizedArr(Result)]
 
                 const ResultVO = {
                     secureId: KecerdasanDetail.secureId,
