@@ -57,9 +57,9 @@ class Kecerdasan implements KecerdasanService {
         }
     }
 
-    public async findAll(): Promise<any> {
+    public async findAll(search: string = ""): Promise<any> {
         try {
-            const Kecerdasan = await this.kecerdasanModel.findAll();
+            const Kecerdasan = await this.kecerdasanModel.findAll(search);
             if (!Kecerdasan) throw "Get Data Error";
 
             Kecerdasan.map((e: any) => {
