@@ -18,11 +18,12 @@ class Kejiwaan implements KejiwaanModel {
         const sql = `update kejiwaan_group set
                             title = ?,
                             description = ?,
-                            time = ?
+                            time = ?,
+                            is_random = ?
                             where secureId = ?`;
 
         return new Promise((resolve, reject) => {
-            Database.query(sql, [payload.title, payload.description, payload.time, payload.secureId], (err: any, response: any) => {
+            Database.query(sql, [payload.title, payload.description, payload.time, payload.is_random, payload.secureId], (err: any, response: any) => {
                 if (!err) resolve(response)
                 else reject(err)
             })
@@ -62,6 +63,7 @@ class Kejiwaan implements KejiwaanModel {
                         description,
                         time,
                         is_active,
+                        is_random,
                         count(id_group) as total_soal
                         FROM kejiwaan_group kg
                     left join kejiwaan_question kq on kg.id = kq.id_group
@@ -76,16 +78,18 @@ class Kejiwaan implements KejiwaanModel {
         });
     }
 
-    public findAll(): Promise<any> {
+    public findAll(search: string): Promise<any> {
         const sql = `SELECT 
                         kg.secureId,
                         title,
                         description,
                         time,
                         is_active,
+                        is_random,
                         count(id_group) as total_soal
                         FROM kejiwaan_group kg
                     left join kejiwaan_question kq on kg.id = kq.id_group
+                    where title LIKE '%${search}%'
                     group by kg.id;`;
 
         return new Promise((resolve, reject) => {

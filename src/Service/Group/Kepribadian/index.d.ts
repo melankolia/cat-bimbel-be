@@ -5,5 +5,5 @@ export interface KepribadianService {
     updateData(payload: PayloadCreateKepribadianVO): Promise<any>
     deleteData(secureId: string): Promise<any>
     activation(payload: PayloadActivationVO): Promise<any>
-    findAll(): Promise<any>
+    findAll(search: string): Promise<any>
 }

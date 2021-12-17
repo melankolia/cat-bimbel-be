@@ -19,8 +19,10 @@ class Kejiwaan {
 
         try {
             const secureId = req.query?.secureId as string;
+            const type = req.query?.type as string;
 
-            const Result = await this.kejiwaanService.findAll(secureId);
+
+            const Result = await this.kejiwaanService.findAll(secureId, type);
             return Responses.success(res, Result);
         } catch (error) {
             return Responses.failed(res, error, next);

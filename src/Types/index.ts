@@ -34,6 +34,7 @@ export interface PayloadCreateKecerdasanVO {
     description: string;
     time: number;
     is_active: boolean;
+    is_random: boolean;
 }
 
 export interface PayloadRequestKecerdasanQuestionVO {
@@ -76,6 +77,7 @@ export interface PayloadCreateKepribadianVO {
     description: string;
     time: number;
     is_active: boolean;
+    is_random: boolean;
 }
 
 export interface PayloadRequestKepribadianQuestionVO {
@@ -113,6 +115,7 @@ export interface PayloadCreateKejiwaanVO {
     description: string;
     time: number;
     is_active: boolean;
+    is_random: boolean;
 }
 
 export interface PayloadRequestKejiwaanQuestionVO {
@@ -167,6 +170,7 @@ export interface PayloadCreateKecermatanVO {
     description: string;
     time: number;
     is_active: boolean;
+    is_random: boolean
 }
 
 export interface PayloadCreateKecermatanSectionVO {
@@ -231,6 +235,6 @@ export interface PayloadCreateNilaiKecermatanVO {
     section: string;
     benar: number;
     salah: number;
-    salary: number;
+    tidak_dijawab: number;
     total: number;
 }

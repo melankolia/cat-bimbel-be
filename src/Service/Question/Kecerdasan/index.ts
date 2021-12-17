@@ -2,6 +2,7 @@ import KecerdasanModel from "../../../Model/Question/Kecerdasan";
 import KecerdasanGroupModel from "../../../Model/Group/Kecerdasan";
 import { PayloadCreateKecerdasanAnswerVO, PayloadCreateKecerdasanQuestionVO, PayloadRequestKecerdasanQuestionVO } from "../../../Types";
 import { KecerdasanService } from "./index.d";
+import useFullFunction from "../../../Utils/Helper/UsefullFunction";
 import { v4 as uuidv4 } from "uuid";
 import path from "path";
 import fs from "fs";
@@ -15,7 +16,7 @@ class Kecerdasan implements KecerdasanService {
         this.kecerdasanGroupModel = new KecerdasanGroupModel();
     }
 
-    public async findAll(secureId: string): Promise<any> {
+    public async findAll(secureId: string, type: string): Promise<any> {
         try {
             const [KecerdasanDetail] = await this.kecerdasanGroupModel.findOne(secureId);
             if (!KecerdasanDetail) throw "Group Not Found";
@@ -93,15 +94,17 @@ class Kecerdasan implements KecerdasanService {
                     }
                 })
 
+                if (KecerdasanDetail.is_random && type !== 'admin') Result = [...useFullFunction.randomizedArr(Result)]
+
                 const ResultVO = {
                     secureId: KecerdasanDetail.secureId,
                     title: KecerdasanDetail.title,
                     description: KecerdasanDetail.description,
                     time: KecerdasanDetail.time,
                     is_active: KecerdasanDetail.is_active,
+                    is_random: KecerdasanDetail.is_random,
                     result: [...Result]
                 }
-
                 return ResultVO;
             } else {
 
@@ -111,6 +114,7 @@ class Kecerdasan implements KecerdasanService {
                     description: KecerdasanDetail.description,
                     time: KecerdasanDetail.time,
                     is_active: KecerdasanDetail.is_active,
+                    is_random: KecerdasanDetail.is_random,
                     result: [...Kecerdasan]
                 }
 

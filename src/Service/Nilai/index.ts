@@ -48,6 +48,7 @@ class Nilai implements NilaiService {
                     title: string;
                     benar: number;
                     salah: number;
+                    tidak_dijawab: number;
                 }>;
             }> = [];
             const Kecermatan = await this.nilaiModel.findAllKecermatan(secureId);
@@ -56,6 +57,7 @@ class Nilai implements NilaiService {
                 Kecermatan.map((e: any) => {
                     e.benar = e?.benar.length != 0 ? e.benar?.split(",") : 0;
                     e.salah = e?.salah.length != 0 ? e.salah?.split(",") : 0;
+                    e.tidak_dijawab = e?.tidak_dijawab?.length != 0 ? e?.tidak_dijawab?.split(",") : 0;
                     e.total = e?.total.length != 0 ? e.total?.split(",") : 0;
                     Result.push({
                         secureId: e.secureId,
@@ -63,9 +65,10 @@ class Nilai implements NilaiService {
                         grandTotal: e.total?.reduce((e: any, c: any) => +e + +c) / e.total.length,
                         section: e?.section?.split(",")?.map((e2: any, i: any) => ({
                             title: e2,
-                            benar: e.benar[i] ? +e.benar[i] : 0,
-                            salah: e.salah[i] ? +e.salah[i] : 0,
-                            total: e.total[i] ? +e.total[i] : 0
+                            benar: e?.benar?.[i] ? +e?.benar?.[i] : 0,
+                            salah: e?.salah?.[i] ? +e?.salah?.[i] : 0,
+                            tidak_dijawab: e?.tidak_dijawab?.[i] ? +e?.tidak_dijawab?.[i] : 0,
+                            total: e?.total?.[i] ? +e?.total?.[i] : 0
                         }))
                     })
                 })
