@@ -6,7 +6,6 @@ import fs from "fs";
 const storage = multer.diskStorage({
   destination(req: Request, file: any, cb) {
     const pathUri = path.join(
-      'src',
       'static-img',
       'images',
       req.query.secureId as string,

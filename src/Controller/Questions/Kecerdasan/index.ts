@@ -94,7 +94,9 @@ class Kecerdasan {
             const Upload = Multer.single('file')
             Upload(req, res, async (err: any) => {
                 if (err) throw "Error Uploading File"
-                Responses.success(res, { imageUri: req.file?.path.replace("src/static-img", "") });
+
+                const directory = path.join("static-img")
+                Responses.success(res, { imageUri: req.file?.path.replace(directory, "") });
             })
         } catch (error) {
             return Responses.failed(res, error, next);
@@ -111,13 +113,13 @@ class Kecerdasan {
 
         try {
             const pathUri = path.join(
-                'src',
                 'static-img',
                 'images',
                 req.body.secureId as string,
                 req.body.question as string,
                 req.body.fileName as string,
             )
+            console.log(pathUri)
             fs.unlinkSync(pathUri)
             Responses.success(res, pathUri);
         } catch (error) {
