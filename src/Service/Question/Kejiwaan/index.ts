@@ -46,7 +46,9 @@ class Kejiwaan implements KejiwaanService {
                 }>;
 
                 Kejiwaan.map((e: any, i: any) => {
-                    if (i == 0 || e.question_secureId != Result[Result.length - 1]?.question?.secureId) {
+                    const findIndexQuestion = Result.findIndex((e2: any) => e2.question?.secureId == e.question_secureId);
+
+                    if (i == 0 || findIndexQuestion == -1) {
                         let pointer = i == 0 ? 0 : Result.length;
 
                         Result[pointer] = {
@@ -75,7 +77,7 @@ class Kejiwaan implements KejiwaanService {
                         }
                     }
 
-                    else if (e.question_secureId == Result[Result.length - 1]?.question?.secureId) {
+                    else if (findIndexQuestion != -1) {
                         Result[Result.length - 1].answerList.push({
                             secureId: e.answer_secureId,
                             symbol: e.symbol,
