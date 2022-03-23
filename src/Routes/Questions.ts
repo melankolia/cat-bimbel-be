@@ -3,6 +3,7 @@ import KecerdasanController from "../Controller/Questions/Kecerdasan";
 import KepribadianController from "../Controller/Questions/Kepribadian";
 import KejiwaanController from "../Controller/Questions/Kejiwaan";
 import KecermatanController from "../Controller/Questions/Kecermatan";
+import NewKecermatanController from "../Controller/Questions/New_Kecermatan";
 import AuthCheck from "../Utils/Helper/AuthCheck";
 
 
@@ -11,6 +12,7 @@ const Kecerdasan = new KecerdasanController();
 const Kepribadian = new KepribadianController();
 const Kejiwaan = new KejiwaanController();
 const Kecermatan = new KecermatanController();
+const NewKecermatan = new NewKecermatanController();
 
 Routers.get("/kecerdasan", Kecerdasan.findAll.bind(Kecerdasan));
 Routers.post("/kecerdasan", AuthCheck.isAdmin, Kecerdasan.insertData.bind(Kecerdasan));
@@ -31,5 +33,11 @@ Routers.post("/kecermatan/section", AuthCheck.isAdmin, Kecermatan.insertSection.
 Routers.post("/kecermatan/question", AuthCheck.isAdmin, Kecermatan.insertQuestion.bind(Kecermatan));
 Routers.delete("/kecermatan/section", AuthCheck.isAdmin, Kecermatan.deleteSection.bind(Kecermatan));
 Routers.delete("/kecermatan/question", AuthCheck.isAdmin, Kecermatan.deleteQuestion.bind(Kecermatan));
+
+Routers.get("/new-kecermatan", NewKecermatan.findAll.bind(NewKecermatan));
+Routers.post("/new-kecermatan/section", AuthCheck.isAdmin, NewKecermatan.insertSection.bind(NewKecermatan));
+Routers.post("/new-kecermatan/question", AuthCheck.isAdmin, NewKecermatan.insertQuestion.bind(NewKecermatan));
+Routers.delete("/new-kecermatan/section", AuthCheck.isAdmin, NewKecermatan.deleteSection.bind(NewKecermatan));
+Routers.delete("/new-kecermatan/question", AuthCheck.isAdmin, NewKecermatan.deleteQuestion.bind(NewKecermatan));
 
 export default Routers;

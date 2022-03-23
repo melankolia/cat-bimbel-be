@@ -42,7 +42,8 @@ class User implements UserModel {
                             username,
                             password,
                             nama_lengkap,
-                            is_online
+                            is_online,
+                            type
                             FROM
                             User where username LIKE ? order by is_online DESC`
         return new Promise((resolve, reject) => {

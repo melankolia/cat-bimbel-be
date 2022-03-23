@@ -1,6 +1,7 @@
 import SoalModel from "../../Model/Soal";
 import KecerdasanGroupModel from "../../Model/Group/Kecerdasan";
 import KecermatanGroupModel from "../../Model/Group/Kecermatan";
+import NewKecermatanGroupModel from "../../Model/Group/New_Kecermatan";
 import KepribadianGroupModel from "../../Model/Group/Kepribadian";
 import KejiwaanGroupModel from "../../Model/Group/Kejiwaan";
 import PeraturanModel from "../../Model/Peraturan";
@@ -10,6 +11,7 @@ class Soal implements SoalService {
     soalModel: SoalModel;
     peraturanModel: PeraturanModel;
     kecermatanGroupModel: KecermatanGroupModel;
+    newKecermatanGroupModel: NewKecermatanGroupModel;
     kecerdasanGroupModel: KecerdasanGroupModel;
     kejiwaanGroupModel: KejiwaanGroupModel;
     kepribadianGroupModel: KepribadianGroupModel;
@@ -18,6 +20,7 @@ class Soal implements SoalService {
         this.soalModel = new SoalModel();
         this.peraturanModel = new PeraturanModel();
         this.kecermatanGroupModel = new KecermatanGroupModel();
+        this.newKecermatanGroupModel = new NewKecermatanGroupModel();
         this.kecerdasanGroupModel = new KecerdasanGroupModel();
         this.kejiwaanGroupModel = new KejiwaanGroupModel();
         this.kepribadianGroupModel = new KepribadianGroupModel();
@@ -39,6 +42,9 @@ class Soal implements SoalService {
                     break;
                 case 'kecermatan':
                     Soal = await this.soalModel.findAllKecermatan() as Array<any>
+                    break;
+                case 'new_kecermatan':
+                    Soal = await this.soalModel.findAllNewKecermatan() as Array<any>
                     break;
                 default:
                     throw "Type Required"
@@ -76,6 +82,9 @@ class Soal implements SoalService {
                     break;
                 case 'kecermatan':
                     [ResultGroup] = await this.kecermatanGroupModel.findOne(secureId);
+                    break;
+                case 'new_kecermatan':
+                    [ResultGroup] = await this.newKecermatanGroupModel.findOne(secureId);
                     break;
                 case 'kejiwaan':
                     [ResultGroup] = await this.kejiwaanGroupModel.findOne(secureId);

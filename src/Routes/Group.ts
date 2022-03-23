@@ -3,12 +3,14 @@ import KecerdasanController from "../Controller/Group/Kecerdasan";
 import KepribadianController from "../Controller/Group/Kepribadian";
 import KejiwaanController from "../Controller/Group/Kejiwaan";
 import KecermatanController from "../Controller/Group/Kecermatan";
+import NewKecermatanController from "../Controller/Group/New_Kecermatan";
 
 const Routers: Router = express.Router();
 const Kecerdasan = new KecerdasanController();
 const Kepribadian = new KepribadianController();
 const Kejiwaan = new KejiwaanController();
 const Kecermatan = new KecermatanController();
+const NewKecermatan = new NewKecermatanController();
 
 Routers.get("/kecerdasan", Kecerdasan.findAll.bind(Kecerdasan));
 Routers.post("/kecerdasan", Kecerdasan.insertData.bind(Kecerdasan));
@@ -29,5 +31,10 @@ Routers.get("/kecermatan", Kecermatan.findAll.bind(Kecermatan));
 Routers.post("/kecermatan", Kecermatan.insertData.bind(Kecermatan));
 Routers.post("/kecermatan/activation", Kecermatan.activation.bind(Kecermatan));
 Routers.delete("/kecermatan/:secureId", Kecermatan.deleteData.bind(Kecermatan));
+
+Routers.get("/new-kecermatan", NewKecermatan.findAll.bind(NewKecermatan));
+Routers.post("/new-kecermatan", NewKecermatan.insertData.bind(NewKecermatan));
+Routers.post("/new-kecermatan/activation", NewKecermatan.activation.bind(NewKecermatan));
+Routers.delete("/new-kecermatan/:secureId", NewKecermatan.deleteData.bind(NewKecermatan));
 
 export default Routers;
