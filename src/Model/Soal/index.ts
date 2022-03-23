@@ -46,6 +46,29 @@ class Soal implements SoalModel {
         });
     }
 
+    public findAllNewKecermatan() {
+        const sql = `SELECT 
+                        kg.secureId,
+                        kg.title,
+                        kg.description,
+                        kg.time,
+                        count(kq.id) as soal,
+                        count(DISTINCT ks.id) as section,
+                        kg.is_active
+                        FROM new_kecermatan_group kg
+                    left join new_kecermatan_section ks on kg.id = ks.id_group
+                    left join new_kecermatan_question kq on ks.id = kq.id_section
+                    where is_active = true
+                    group by kg.id;`;
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
     public findAllKejiwaan() {
         const sql = `select
                         kg.secureId, 
