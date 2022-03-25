@@ -1,9 +1,9 @@
 import Database from "../../../Utils/Configs/db";
 import { KecermatanModel } from "./index.d";
-import { PayloadActivationVO, PayloadCreateKecermatanVO } from "../../../Types";
+import { PayloadActivationVO, PayloadCreateNewKecermatanVO } from "../../../Types";
 
 class New_Kecermatan implements KecermatanModel {
-    public createData(payload: PayloadCreateKecermatanVO): Promise<any> {
+    public createData(payload: PayloadCreateNewKecermatanVO): Promise<any> {
         const sql = `INSERT INTO new_kecermatan_group SET ?`;
 
         return new Promise((resolve, reject) => {
@@ -14,16 +14,17 @@ class New_Kecermatan implements KecermatanModel {
         });
     }
 
-    public updateData(payload: PayloadCreateKecermatanVO): Promise<any> {
+    public updateData(payload: PayloadCreateNewKecermatanVO): Promise<any> {
         const sql = `update new_kecermatan_group set
                             title = ?,
                             description = ?,
                             time = ?,
+                            time_interval = ?,
                             is_random = ?
                             where secureId = ?`;
 
         return new Promise((resolve, reject) => {
-            Database.query(sql, [payload.title, payload.description, payload.time, payload.is_random, payload.secureId], (err: any, response: any) => {
+            Database.query(sql, [payload.title, payload.description, payload.time, payload.time_interval, payload.is_random, payload.secureId], (err: any, response: any) => {
                 if (!err) resolve(response)
                 else reject(err)
             })
@@ -62,6 +63,7 @@ class New_Kecermatan implements KecermatanModel {
                         kg.title,
                         kg.description,
                         kg.time,
+                        kg.time_interval,
                         count(kq.id) as total_soal,
                         count(DISTINCT ks.id) as total_section,
                         kg.is_active,
@@ -86,6 +88,7 @@ class New_Kecermatan implements KecermatanModel {
                         kg.title,
                         kg.description,
                         kg.time,
+                        kg.time_interval,
                         count(kq.id) as total_soal,
                         count(DISTINCT ks.id) as total_section,
                         kg.is_active,
