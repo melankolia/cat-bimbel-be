@@ -1,5 +1,5 @@
 import NewKecermatanModel from "../../../Model/Group/New_Kecermatan";
-import { PayloadActivationVO, PayloadCreateKecermatanVO } from "../../../Types";
+import { PayloadActivationVO, PayloadCreateNewKecermatanVO } from "../../../Types";
 import { KecermatanService } from "./index.d";
 
 class New_Kecermatan implements KecermatanService {
@@ -9,7 +9,7 @@ class New_Kecermatan implements KecermatanService {
         this.newKecermatanModel = new NewKecermatanModel();
     }
 
-    public async createData(payload: PayloadCreateKecermatanVO): Promise<any> {
+    public async createData(payload: PayloadCreateNewKecermatanVO): Promise<any> {
         try {
             const Kecermatan = await this.newKecermatanModel.createData(payload);
             if (!Kecermatan) throw "Create Group Kecermatan Gagal";
@@ -20,7 +20,7 @@ class New_Kecermatan implements KecermatanService {
         }
     }
 
-    public async updateData(payload: PayloadCreateKecermatanVO): Promise<any> {
+    public async updateData(payload: PayloadCreateNewKecermatanVO): Promise<any> {
         try {
             const [Kecermatan] = await this.newKecermatanModel.findOne(payload.secureId);
             if (!Kecermatan) throw "Data Not Found";

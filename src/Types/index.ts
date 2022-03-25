@@ -173,6 +173,16 @@ export interface PayloadCreateKecermatanVO {
     is_random: boolean
 }
 
+export interface PayloadCreateNewKecermatanVO {
+    secureId: string;
+    title: string;
+    description: string;
+    time: number;
+    time_interval: number;
+    is_active: boolean;
+    is_random: boolean
+}
+
 export interface PayloadCreateKecermatanSectionVO {
     groupSecureId: string;
     secureId: string;

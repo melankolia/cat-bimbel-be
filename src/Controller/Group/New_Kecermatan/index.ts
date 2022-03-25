@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import Responses from "../../../Utils/Helper/Response";
 import NewKecermatanService from "../../../Service/Group/New_Kecermatan";
-import { PayloadCreateKecermatanVO, PayloadActivationVO } from "../../../Types";
+import { PayloadCreateNewKecermatanVO, PayloadActivationVO } from "../../../Types";
 import { v4 as uuidv4 } from "uuid";
 
 class Kecermatan {
@@ -15,6 +15,7 @@ class Kecermatan {
         try {
             if (!req.body?.title) throw "Title Required";
             else if (!req.body?.time) throw "Time Required";
+            else if (!req.body?.time_interval) throw "Interval Required";
             else if (req.body?.is_active == null) throw "Bad Request";
 
         } catch (error) {
@@ -23,11 +24,12 @@ class Kecermatan {
 
         try {
             let Result: any;
-            const payload: PayloadCreateKecermatanVO = {
+            const payload: PayloadCreateNewKecermatanVO = {
                 secureId: "",
                 title: req.body?.title,
                 description: req.body?.description || "",
                 time: req.body?.time,
+                time_interval: req.body?.time_interval,
                 is_active: req.body?.is_active,
                 is_random: req.body?.is_random
             }

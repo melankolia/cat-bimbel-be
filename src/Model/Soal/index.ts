@@ -52,6 +52,7 @@ class Soal implements SoalModel {
                         kg.title,
                         kg.description,
                         kg.time,
+                        kg.time_interval,
                         count(kq.id) as soal,
                         count(DISTINCT ks.id) as section,
                         kg.is_active

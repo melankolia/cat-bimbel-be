@@ -138,6 +138,7 @@ class Kecermatan implements KecermatanService {
                     secureId: KecermatanDetail.secureId,
                     title: KecermatanDetail.title,
                     time: KecermatanDetail.time,
+                    time_interval: KecermatanDetail.time_interval,
                     description: KecermatanDetail.description,
                     is_active: KecermatanDetail.is_active,
                     is_random: KecermatanDetail.is_random,

@@ -69,6 +69,7 @@ class Soal implements SoalService {
                     title: string;
                     description: string;
                     time: number;
+                    time_interval: number;
                     total_soal: number;
                     total_section: number;
                     is_active: number;
