@@ -127,6 +127,16 @@ class Nilai {
             return Responses.failed(res, error, next);
         }
     }
+
+    public async deleteAll(req: Request, res: Response, next: NextFunction): Promise<any> {
+        try {
+            const Result = await this.nilaiService.deleteHistoryMark();
+            return Responses.success(res, Result);
+            
+        } catch (error) {
+            return Responses.failed(res, error, next);
+        }
+    }
 }
 
 export default Nilai;

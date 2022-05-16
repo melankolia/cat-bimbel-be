@@ -6,4 +6,5 @@ export interface NilaiService {
     findAllNewKecermatan(secureId: string): Promise<any>
     insertDataKecermatan(secureId: string, Payload: Array<PayloadCreateNilaiKecermatanVO>): Promise<any>
     insertDataNewKecermatan(secureId: string, Payload: Array<PayloadCreateNilaiKecermatanVO>): Promise<any>
+    deleteHistoryMark(): Promise<any>
 }

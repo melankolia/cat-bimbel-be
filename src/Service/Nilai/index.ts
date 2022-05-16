@@ -157,6 +157,19 @@ class Nilai implements NilaiService {
             throw error;
         }
     }
+
+    public async deleteHistoryMark(): Promise<any> {
+        try {
+            
+            await this.nilaiModel.deleteHistoryMark();
+            await this.nilaiModel.deleteHistoryMarkKecermatan();
+            await this.nilaiModel.deleteHistoryMarkNewKecermatan();
+
+            return true
+        } catch (error) {
+            throw error;
+        }
+    }
 };
 
 export default Nilai;

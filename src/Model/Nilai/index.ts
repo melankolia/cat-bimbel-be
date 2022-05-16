@@ -109,6 +109,38 @@ class Nilai implements NilaiModel {
             })
         })
     }
+
+    public deleteHistoryMarkNewKecermatan(): Promise<any> {
+        const sql = `delete from daftar_nilai_new_kecermatan`;
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+
+    public deleteHistoryMarkKecermatan(): Promise<any> {
+        const sql = `delete from daftar_nilai_kecermatan`;
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
+    public deleteHistoryMark(): Promise<any> {
+        const sql = `delete from daftar_nilai`;
+
+        return new Promise((resolve, reject) => {
+            Database.query(sql, (err: any, response: any) => {
+                if (!err) resolve(response)
+                else reject(err)
+            })
+        });
+    }
 }
 
 export default Nilai;
