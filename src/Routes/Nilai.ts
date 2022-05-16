@@ -10,5 +10,6 @@ Routers.get("/new-kecermatan", Controller.findAllNewKecermatan.bind(Controller))
 Routers.post("/", Controller.insertData.bind(Controller));
 Routers.post("/kecermatan", Controller.insertDataKecermatan.bind(Controller));
 Routers.post("/new-kecermatan", Controller.insertDataNewKecermatan.bind(Controller));
+Routers.delete("/", Controller.deleteAll.bind(Controller));
 
 export default Routers;
